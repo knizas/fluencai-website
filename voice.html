@@ -1,0 +1,839 @@
+<!doctype html>
+<html lang="en">
+<head>
+<!-- Favicon / app icons -->
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="any"><!-- legacy fallback -->
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#0f1221"><!-- Safari pinned tab -->
+<meta name="theme-color" content="#d8bdff"><!-- Android status bar color -->
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Fluencai Voice — Humanized AI Voice Agents (Coming Soon)</title>
+<meta name="description" content="Humanized voice agents in 10+ languages. Natural prosody, real-time responsiveness, and easy website/telephony integration. Coming soon from Fluencai." />
+<link rel="icon" type="image/svg+xml"
+href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23d8bdff'/%3E%3Cstop offset='1' stop-color='%23c2e9fb'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect rx='14' ry='14' width='64' height='64' fill='url(%23g)'/%3E%3C/svg%3E" />
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,300;8..144,400;8..144,700;8..144,900&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --brand-a:#d8bdff; --brand-b:#c2e9fb;
+    --bg:linear-gradient(180deg,var(--brand-a) 0%, var(--brand-b) 100%);
+    --ink:#0f1221; --ink-2:#30364a; --line:#e8eaf2;
+    --container:1120px; --wrap:980px; --gutter:24px;
+    --r-lg:20px; --r-xl:24px;
+    --shadow-1:0 8px 24px rgba(16,18,34,.08), 0 2px 10px rgba(16,18,34,.05);
+    --s-1:8px; --s-2:12px; --s-3:18px; --s-4:24px; --s-5:32px; --s-6:44px;
+
+    /* phone safe-area */
+    --top-safe:84px;
+    --controls-h:92px;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;color:var(--ink);font-family:"Roboto Flex",system-ui,-apple-system,Segoe UI,Helvetica,Arial,sans-serif}
+  body{background:var(--bg);background-attachment:fixed}
+  a{color:inherit;text-decoration:none}
+  img,video{display:block;max-width:100%;height:auto}
+  .container{max-width:var(--container);margin-inline:auto;padding-inline:var(--gutter)}
+  .wrap{max-width:var(--wrap);margin-inline:auto}
+  .section{padding:var(--s-6) 0}
+
+  /* === Mobile menu (match other pages) === */
+.hamburger{display:none;align-items:center;justify-content:center;width:44px;height:44px;border-radius:12px;border:1px solid var(--line);background:#fff;box-shadow:var(--shadow-1)}
+.hamburger svg{width:22px;height:22px}
+.contact-icon{display:none}
+@media (max-width:900px){
+  .menu{display:none}                    /* hide desktop nav links */
+  .nav-right > .btn{display:none}        /* hide the big Request Demo button on phones */
+  .hamburger{display:inline-grid}
+  .contact-icon{display:inline-grid}
+}
+.mobile-nav[hidden]{display:none}
+.mobile-nav{position:fixed;inset:0;z-index:50;backdrop-filter:blur(8px) saturate(1.1);background:rgba(15,18,33,.08)}
+.mobile-panel{
+  position:absolute;top:0;right:0;height:100%;width:min(84vw,420px);
+  background:#ffffff;border-left:1px solid var(--line);box-shadow:0 18px 48px rgba(16,18,34,.12), 0 8px 24px rgba(16,18,34,.08);
+  padding:16px;display:flex;flex-direction:column;gap:12px;
+  transform:translateX(10%);opacity:0;transition:transform .25s ease,opacity .25s ease
+}
+.mobile-nav.show .mobile-panel{transform:none;opacity:1}
+.mobile-head{display:flex;align-items:center;justify-content:space-between}
+.mobile-links{display:grid;gap:10px;margin-top:8px}
+.mobile-links a{padding:12px 14px;border:1px solid var(--line);border-radius:14px;background:#fff;font-weight:800}
+.no-scroll{overflow:hidden;touch-action:none}
+
+/* right-side group + small contact button */
+.nav-right{display:flex;align-items:center;gap:8px}
+.btn-icon{display:inline-grid;place-items:center;width:44px;height:44px;border-radius:12px;border:1px solid var(--line);background:#fff;box-shadow:var(--shadow-1)}
+/* Hide the small contact icon on desktop */
+.btn-icon.contact-icon { display: none; }
+
+/* Show it only on phones */
+@media (max-width:900px){
+  .btn-icon.contact-icon { display: inline-grid; }
+}
+
+/* === Phone spacing tighter (only on ≤900px) === */
+@media (max-width:900px){
+  :root{ --s-6:36px; --s-5:26px; }
+  .container{padding-inline:16px}
+  .section{padding:36px 0}
+  .hero{padding-top:36px}
+  .hero-grid{gap:14px; margin-top:12px}
+  .grid-3{gap:14px}
+  .glass{padding:16px}
+}
+@media (max-width:560px){
+  .section{padding:30px 0}
+}
+
+
+  /* Type */
+  h1{margin:0 0 var(--s-1);font-size:clamp(42px,6.5vw,88px);line-height:1.02;letter-spacing:-.015em;font-weight:900}
+  h2{margin:0 0 var(--s-2);font-size:clamp(26px,4vw,42px);line-height:1.08;letter-spacing:-.01em;font-weight:900}
+  h3{margin:0 0 var(--s-1);font-size:21px;line-height:1.25;font-weight:900}
+  p{margin:0;color:var(--ink-2);line-height:1.6;font-size:16px}
+  .lead{max-width:72ch;margin:0 auto var(--s-2);text-align:center;color:#3a4160;font-size:18px}
+  .badge{display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border-radius:999px;border:1px solid var(--line);background:#fff;font-weight:800}
+  .ic{width:24px;height:24px;vertical-align:-4px}
+
+  /* Header */
+  .header{position:sticky;top:12px;z-index:10;padding:12px 0}
+  .nav{display:flex;align-items:center;justify-content:space-between;background:#fffffff2;border:1px solid var(--line);border-radius:999px;padding:10px 12px;box-shadow:var(--shadow-1)}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:900}
+  .logo{width:26px;height:26px;border-radius:999px;background:linear-gradient(135deg,var(--brand-a),var(--brand-b))}
+  .menu{display:flex;gap:28px;align-items:center}
+  @media (max-width:900px){.menu{display:none}}
+  .btn{display:inline-flex;align-items:center;gap:10px;padding:12px 18px;border-radius:999px;border:1px solid var(--line);background:linear-gradient(135deg,var(--brand-a),var(--brand-b));color:#0f1221;font-weight:800;box-shadow:var(--shadow-1);transition:transform .15s ease}
+  .btn:hover{transform:translateY(-1px)}
+
+  /* HERO */
+  .hero{position:relative;padding-top:var(--s-6);text-align:center;overflow:hidden}
+  /* spotlight orb like ElevenLabs */
+  .hero::before{
+    content:"";
+    position:absolute; inset:auto; left:50%; top:52%;
+    width:920px; height:920px; transform:translate(-50%,-50%);
+    background:radial-gradient(closest-side, rgba(255,255,255,.9), rgba(255,255,255,.55) 40%, rgba(255,255,255,0) 70%),
+               radial-gradient(closest-side, rgba(210,190,255,.65), rgba(194,233,251,.35) 55%, rgba(194,233,251,0) 75%);
+    filter:blur(18px); pointer-events:none; z-index:0;
+  }
+  .hero > .container{position:relative; z-index:1}
+
+  .hero-grid{display:grid;grid-template-columns:1fr 420px;gap:22px;align-items:center;margin-top:var(--s-2)}
+  @media (max-width:1024px){.hero-grid{grid-template-columns:1fr}}
+
+  /* === iPhone (black) === */
+  .iphone-wrap{display:flex;justify-content:center}
+  .iphone{
+    width:340px; aspect-ratio:9/18;
+    border-radius:44px; padding:10px;
+    background:linear-gradient(150deg,#0b0d14,#161b27);
+    box-shadow:0 28px 60px rgba(10,12,20,.35), inset 0 1px 0 rgba(255,255,255,.06);
+    border:1px solid #0f1320;
+  }
+  .screen{position:relative;height:100%;background:#fff;border-radius:36px;overflow:hidden;border:1px solid var(--line)}
+  .island{position:absolute;top:12px;left:50%;transform:translateX(-50%);width:156px;height:30px;background:#000;border-radius:16px}
+  .status{position:absolute;top:4px;left:0;right:0;padding:8px 18px 0 18px;display:flex;justify-content:space-between;align-items:center;color:#4e556e;font-size:12px}
+  .bat{display:flex;align-items:center;gap:6px}
+  .bat .cell{width:20px;height:10px;border-radius:2px;border:1.5px solid #4e556e;position:relative}
+  .bat .cell::after{content:"";position:absolute;inset:2px 4px 2px 2px;background:#4e556e;border-radius:1px}
+  .bat .nub{width:2px;height:6px;background:#4e556e;border-radius:1px}
+
+  /* Safe, centered content */
+  .content{
+    position:relative;height:100%;
+    padding:var(--top-safe) 18px calc(var(--controls-h) + 10px);
+    display:flex;flex-direction:column;align-items:center;gap:10px;
+  }
+
+  /* Call head */
+  .avatar-ring{width:104px;height:104px;border-radius:50%;display:grid;place-items:center;position:relative;background:radial-gradient(circle,#fff 20%,#f6f8ff 65%,#eef1fb 100%);border:1px solid var(--line);transition:box-shadow .35s ease}
+  .avatar-ring.pulse{box-shadow:0 0 0 10px rgba(216,189,255,.25), 0 0 0 22px rgba(194,233,251,.18)}
+  .avatar{width:74px;height:74px;border-radius:50%;background:linear-gradient(135deg,var(--brand-a),var(--brand-b));border:1px solid var(--line)}
+  .title-sm{font-weight:900;font-size:16px}
+  .subtle{color:#697190;font-size:13px}
+
+  /* Transparent chat (no container, no scrolling) */
+  .chat{width:100%;max-width:300px;display:grid;gap:10px}
+  .row{display:grid;grid-template-columns:54px 1fr;gap:8px;align-items:start;opacity:0;transform:translateY(8px) scale(.98)}
+  .row.in{opacity:1;transform:translateY(0) scale(1);transition:opacity .45s ease, transform .45s cubic-bezier(.22,1,.36,1)}
+  .chip{height:22px;border-radius:999px;border:1px solid var(--line);display:grid;place-items:center;font-size:11px;background:#fff;font-weight:800}
+  .chip.agent{background:linear-gradient(135deg,var(--brand-a),var(--brand-b))}
+  .bubble{border:1px solid var(--line);background:#fff;border-radius:12px;padding:10px 12px;box-shadow:var(--shadow-1);font-size:15px;line-height:1.35}
+
+  /* Bottom controls — icons only, inset from edges */
+  .controls{
+    position:absolute;left:0;right:0;bottom:0;height:var(--controls-h);
+    background:linear-gradient(180deg,transparent 0%,rgba(255,255,255,.88) 50%,#fff 100%);
+    border-top:1px solid var(--line);display:flex;justify-content:center;align-items:center
+  }
+  .controls-inner{display:flex;gap:16px;padding:0 16px}
+  .iconbtn{width:46px;height:46px;border-radius:50%;border:1px solid var(--line);background:#fff;display:grid;place-items:center;box-shadow:var(--shadow-1);transition:transform .15s ease, box-shadow .2s ease}
+  .iconbtn:hover{transform:translateY(-1px)}
+  .iconbtn:active{transform:scale(.96)}
+  .ic-sm{width:18px;height:18px}
+
+  /* Side panel */
+  .card{background:#fff;border:1px solid var(--line);border-radius:var(--r-lg);box-shadow:var(--shadow-1);padding:16px}
+  .side{display:flex;flex-direction:column;gap:12px}
+  .audio-wrap{display:flex;flex-direction:column;gap:10px}
+  .playbar{display:flex;align-items:center;gap:10px}
+  .playbtn{width:50px;height:50px;border-radius:50%;border:0;cursor:pointer;display:grid;place-items:center;position:relative;background:conic-gradient(from 0deg,var(--brand-a),var(--brand-b));box-shadow:0 10px 28px rgba(16,18,34,.18);transition:transform .15s ease}
+  .playbtn:hover{transform:translateY(-1px)}
+  .playbtn::after{content:"";position:absolute;inset:6px;border-radius:50%;background:#fff;border:1px solid var(--line)}
+  .playbtn svg{position:relative;z-index:1;width:20px;height:20px;color:#0f1221}
+  .track{flex:1;display:flex;align-items:center;gap:8px}
+  .railP{position:relative;flex:1;height:6px;background:#e6e8f2;border-radius:999px;overflow:hidden}
+  .fillP{position:absolute;inset:0 0 0 0;width:0;background:linear-gradient(90deg,var(--brand-a),var(--brand-b));transition:width .2s linear}
+  .time{font-variant-numeric:tabular-nums;font-size:12px;color:#4a5170}
+  .wave{display:flex;align-items:flex-end;gap:3px;height:24px}
+  .bar{width:3px;border-radius:2px;background:linear-gradient(180deg,var(--brand-a),var(--brand-b));height:6px;animation:wave 1.2s ease-in-out infinite;transform-origin:bottom}
+  .bar:nth-child(2){animation-delay:.1s}.bar:nth-child(3){animation-delay:.2s}.bar:nth-child(4){animation-delay:.3s}.bar:nth-child(5){animation-delay:.4s}.bar:nth-child(6){animation-delay:.5s}
+  @keyframes wave{0%,100%{height:6px}50%{height:22px}}
+
+  /* Languages */
+  .langs{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+  @media (max-width:420px){.langs{grid-template-columns:repeat(3,1fr)}}
+  .lang{display:flex;align-items:center;gap:8px;justify-content:center;height:42px;border-radius:12px;border:1px solid var(--line);background:#fff;font-weight:900}
+  .flag{width:18px;height:18px;border-radius:50%;overflow:hidden;flex:none;border:1px solid #d7dbea}
+
+  /* Sections & glass features */
+  .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s-3)}
+  @media (max-width:980px){.grid-3{grid-template-columns:1fr}}
+  .glass{background:rgba(255,255,255,.42); border:1px solid rgba(255,255,255,.35); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-radius:var(--r-lg); padding:18px}
+  .svc{display:grid;grid-template-columns:64px 1fr;gap:14px;align-items:flex-start}
+  .svc .icon{width:64px;height:64px;border-radius:14px;border:1px solid rgba(255,255,255,.6);display:grid;place-items:center;background:linear-gradient(135deg,var(--brand-a),var(--brand-b))}
+  .svc .icon .ic{width:28px;height:28px}
+
+  /* Use cases scroller */
+  .h-scroll{overflow:auto;-ms-overflow-style:none;scrollbar-width:none}
+  .h-scroll::-webkit-scrollbar{display:none}
+  .rail{display:flex;gap:12px;padding-bottom:4px}
+  .chip{display:inline-flex;align-items:center;gap:10px;padding:10px 14px;border-radius:999px;border:1px solid rgba(255,255,255,.5);background:#fff;font-weight:700;white-space:nowrap}
+
+  /* FAQ */
+  .faq-wrap{max-width:var(--wrap);margin-inline:auto}
+  .faq{display:grid;gap:12px}
+  .faq-item{border:1px solid rgba(255,255,255,.35);background:rgba(255,255,255,.42);backdrop-filter:blur(10px);border-radius:14px;overflow:hidden}
+  .faq-item input{display:none}
+  .faq-item label{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:14px 16px;font-weight:900;cursor:pointer}
+  .chev{width:16px;height:16px;transition:transform .25s ease}
+  .faq-item input:checked + label .chev{transform:rotate(180deg)}
+  .faq-item .ans{max-height:0;overflow:hidden;transition:max-height .35s ease}
+  .faq-item .ans > div{padding:0 16px 14px 16px;color:var(--ink-2)}
+  .faq-item input:checked ~ .ans{max-height:240px}
+
+  /* Reveal */
+  .reveal{opacity:0;transform:translateY(12px);transition:opacity .6s ease, transform .6s ease}
+  .reveal.in{opacity:1;transform:translateY(0)}
+  @media (prefers-reduced-motion: reduce){
+    .bar{animation:none}
+    .reveal{opacity:1;transform:none}
+    .btn,.iconbtn,.playbtn{transition:none}
+  }
+
+  /* === Footer (clean, even, aligned) === */
+  footer.site-footer{
+    border-top:1px solid #ffffff;      /* white line spans full width */
+    padding:48px 0 40px;               /* extra space so © sits lower */
+  }
+  .site-footer .container{
+    max-width:var(--container);
+    margin-inline:auto;
+    padding-inline:var(--gutter);
+  }
+  .foot-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr); /* equal columns for even look */
+    gap:32px;                             /* consistent gaps */
+    align-items:start;
+  }
+  .foot-col h4{
+    margin:0 0 12px;
+    font-size:18px;
+    font-weight:900;
+    line-height:1.2;
+  }
+  .foot-col a,
+  .foot-col p{
+    display:block;
+    margin:6px 0;
+    color:var(--ink-2);
+    text-decoration:none;
+    line-height:1.6;
+  }
+  .foot-col a:hover{ text-decoration:underline }
+  .foot-copy{
+    margin-top:36px;
+    text-align:center;
+    font-size:13.5px;
+    opacity:.75;
+  }
+  @media (max-width:900px){
+    .foot-grid{ grid-template-columns:1fr 1fr }
+  }
+  @media (max-width:560px){
+    .foot-grid{ grid-template-columns:1fr }
+    .foot-copy{ margin-top:28px }
+  }
+  /* Templates & Use Cases — glass cards */
+.usecases { text-align:center; }
+.usecases-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:18px;
+  margin-top:14px;
+}
+@media (max-width:980px){ .usecases-grid{ grid-template-columns:1fr } }
+
+.ucard{
+  display:flex; align-items:flex-start; gap:14px;
+  padding:16px;
+  border:1px solid rgba(255,255,255,.35);
+  background:rgba(255,255,255,.46);
+  backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
+  border-radius:20px;
+  box-shadow:var(--shadow-1);
+  text-align:left;
+  transition: transform .16s ease, box-shadow .25s ease;
+}
+.ucard:hover{ transform:translateY(-2px) }
+
+.ucard .ico{
+  width:56px; height:56px; flex:none;
+  border-radius:14px;
+  display:grid; place-items:center;
+  background:linear-gradient(135deg,var(--brand-a),var(--brand-b));
+  border:1px solid rgba(255,255,255,.6);
+}
+.ucard .ico .ic{ width:26px; height:26px }
+.ucard h4{ margin:0 0 6px; font-size:18px; font-weight:900 }
+.ucard p{ margin:0; color:var(--ink-2) }
+
+/* ===== Templates & Use Cases — poster tiles scroller ===== */
+.ucv-scroll{
+  overflow-x:auto; -ms-overflow-style:none; scrollbar-width:none;
+  padding: 8px 2px 12px; margin-top: 10px;
+  mask-image: linear-gradient(90deg, transparent 0, #000 24px, #000 calc(100% - 24px), transparent 100%);
+}
+.ucv-scroll::-webkit-scrollbar{display:none}
+
+.ucv-rail{
+  display:flex; gap:16px; padding: 2px 2px 6px;
+  scroll-snap-type:x mandatory;
+}
+
+.ucv-tile{
+  position:relative; scroll-snap-align:start;
+  min-width: clamp(300px, 38vw, 460px);
+  border-radius:22px;
+  padding:20px 18px 18px;
+  color: var(--ink);
+  text-decoration:none;
+  border:1px solid rgba(255,255,255,.38);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.86), rgba(255,255,255,.58)),
+    radial-gradient(120% 120% at 0% 0%, rgba(216,189,255,.22), transparent 60%),
+    radial-gradient(120% 120% at 100% 100%, rgba(194,233,251,.18), transparent 60%);
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  box-shadow: var(--shadow-1);
+  transition: transform .16s ease, box-shadow .25s ease;
+}
+.ucv-tile:hover{ transform: translateY(-2px) }
+
+/* thin gradient cap so it feels different from the svc cards */
+.ucv-tile::before{
+  content:""; position:absolute; left:18px; right:18px; top:12px; height:4px; border-radius:999px;
+  background: linear-gradient(90deg, var(--brand-a), var(--brand-b));
+  opacity:.9;
+}
+
+/* watermark icon in the corner */
+.ucv-watermark{
+  position:absolute; right:14px; bottom:10px; width:72px; height:72px; opacity:.12;
+}
+
+/* content */
+.ucv-title{ margin:18px 0 6px; font-size:22px; line-height:1.15; font-weight:900; letter-spacing:-.01em }
+.ucv-desc{ margin:0; color: var(--ink-2); line-height:1.55; font-size:15px }
+
+.ucv-badges{ display:flex; gap:8px; margin-top:12px; flex-wrap:wrap }
+.ucv-badge{
+  font-size:12px; font-weight:800; padding:6px 10px;
+  border:1px solid var(--line); border-radius:999px; background:#fff
+}
+
+/* small icon lozenge next to title (not the watermark) */
+.ucv-ico{
+  display:inline-grid; place-items:center; vertical-align:middle;
+  width:34px; height:34px; border-radius:10px; margin-right:8px;
+  background: linear-gradient(135deg, var(--brand-a), var(--brand-b));
+  border:1px solid rgba(255,255,255,.6);
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.35);
+}
+.ucv-ico .ic{ width:18px; height:18px; color:#0f1221 }
+
+</style>
+</head>
+<body>
+  
+<!-- ICONS -->
+<svg aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden">
+  <symbol id="mail" viewBox="0 0 24 24"><path fill="currentColor" d="M4 6h16a2 2 0 0 1 2 2v.2l-10 6.25L2 8.2V8a2 2 0 0 1 2-2Zm16 12H4a2 2 0 0 1-2-2V9.3l9.2 5.75a2 2 0 0 0 2.1 0L22 9.3V16a2 2 0 0 1-2 2Z"/></symbol>
+  <symbol id="ext" viewBox="0 0 24 24"><path fill="currentColor" d="M14 3h7v7h-2V6.41l-9.3 9.3l-1.4-1.42l9.3-9.3H14V3ZM5 5h5v2H7v10h10v-3h2v5H5V5Z"/></symbol>
+  <symbol id="headset" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2a9 9 0 0 1 9 9v7a3 3 0 0 1-3 3h-1v-6h1a1 1 0 0 1 1-1v-3a7 7 0 0 0-14 0v3a1 1 0 0 0 1 1h1v6H6a3 3 0 0 1-3-3v-7a9 9 0 0 1 9-9Z"/></symbol>
+  <symbol id="globe" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2a10 10 0 1 1 0 20A10 10 0 0 1 12 2Z"/></symbol>
+  <symbol id="latency" viewBox="0 0 24 24"><path fill="currentColor" d="M3 12h4l3-8l4 16l3-8h4"/></symbol>
+  <symbol id="api" viewBox="0 0 24 24"><path fill="currentColor" d="M4 7h6v3H4V7Zm10 0h6v3h-6V7ZM4 14h6v3H4v-3Zm10 0h6v3h-6v-3Z"/></symbol>
+  <symbol id="lock" viewBox="0 0 24 24"><path fill="currentColor" d="M12 1a5 5 0 0 1 5 5v3h1a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h1V6a5 5 0 0 1 5-5Z"/></symbol>
+  <symbol id="plug" viewBox="0 0 24 24"><path fill="currentColor" d="M7 2h10v6H7V2Zm-2 8h14v8a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-8Z"/></symbol>
+  <symbol id="phone" viewBox="0 0 24 24"><path fill="currentColor" d="M6.6 10.8a15 15 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1.1-.23c1.2.48 2.6.75 4 .83a1 1 0 0 1 1 .99V20a2 2 0 0 1-2.2 2A18 18 0 0 1 2 6.2 2 2 0 0 1 4 4h3.2a1 1 0 0 1 1 .99c.08 1.38.35 2.77.83 4a1 1 0 0 1-.23 1.1L6.6 10.8Z"/></symbol>
+  <symbol id="chat" viewBox="0 0 24 24"><path fill="currentColor" d="M4 4h16v11H7l-3 3V4Z"/></symbol>
+  <symbol id="sliders" viewBox="0 0 24 24"><path fill="currentColor" d="M4 6h9v2H4V6Zm0 10h16v2H4v-2Zm7-5h9v2h-9v-2Z"/></symbol>
+  <symbol id="graph" viewBox="0 0 24 24"><path fill="currentColor" d="M3 3h2v18H3V3Zm4 10h2v8H7v-8Zm4-6h2v14h-2V7Zm4 4h2v10h-2V11Zm4-8h2v18h-2V3Z"/></symbol>
+  <symbol id="play" viewBox="0 0 24 24"><path fill="currentColor" d="M8 5v14l11-7L8 5Z"/></symbol>
+  <symbol id="pause" viewBox="0 0 24 24"><path fill="currentColor" d="M6 5h5v14H6V5Zm7 0h5v14h-5V5Z"/></symbol>
+  <symbol id="globe2" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2a10 10 0 1 1 0 20 10 10 0 0 1 0-20Zm0 3a7 7 0 1 0 0 14 7 7 0 0 0 0-14Z"/></symbol>
+  <symbol id="chev" viewBox="0 0 24 24"><path fill="currentColor" d="M7 10l5 5 5-5H7z"/></symbol>
+  <symbol id="calendar" viewBox="0 0 24 24">
+  <path fill="currentColor" d="M7 2h2v3h6V2h2v3h3a2 2 0 0 1 2 2v13a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h3V2Zm13 7H4v11h16V9Z"/>
+</symbol>
+<symbol id="checklist" viewBox="0 0 24 24">
+  <path fill="currentColor" d="M3 4h14v2H3V4Zm0 6h14v2H3v-2Zm0 6h14v2H3v-2Zm16-9l2 2l-5 5l-3-3l2-2l1 1l3-3Z"/>
+</symbol>
+<symbol id="box" viewBox="0 0 24 24">
+  <path fill="currentColor" d="M3 7l9-4l9 4v10l-9 4l-9-4V7Zm9-1.7L6.2 7.5L12 10l5.8-2.5L12 5.3Z"/>
+</symbol>
+</svg>
+
+<!-- Header -->
+<header class="header">
+  <div class="container">
+    <div class="nav">
+      <div class="brand"><span class="logo"></span> Fluencai</div>
+      <nav class="menu" aria-label="Primary">
+        <a href="index.html">Home</a>
+        <a href="index.html#features">AI Branding</a>
+        <a href="app.html">Try-On App</a>
+        <a href="voice.html">Voice App</a>
+        <a href="app-builder.html">App Builder</a>
+      </nav>
+      <!-- grouped right-side actions -->
+      <div class="nav-right">
+        <a class="btn" href="mailto:contact@fluencai.com?subject=Fluencai%20Voice%20Demo"><svg class="ic"><use href="#ext"/></svg> Request a Demo</a>
+        <a class="btn-icon contact-icon" href="mailto:contact@fluencai.com?subject=Fluencai%20Voice%20Demo" aria-label="Request a demo">
+          <svg class="ic"><use href="#ext"/></svg>
+        </a>
+        <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobileNav">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 6h18M3 12h18M3 18h18"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+    <!-- mobile sheet lives outside .nav -->
+    <div class="mobile-nav" id="mobileNav" role="dialog" aria-modal="true" aria-labelledby="mobileTitle" hidden>
+      <div class="mobile-panel">
+        <div class="mobile-head">
+          <div class="brand" id="mobileTitle"><span class="logo"></span> Fluencai</div>
+          <button class="hamburger" id="closeMobile" aria-label="Close menu">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M6 6l12 12M18 6L6 18"/>
+            </svg>
+          </button>
+        </div>
+        <nav class="mobile-links" aria-label="Mobile">
+          <a href="index.html">Home</a>
+          <a href="index.html#features">AI Branding</a>
+          <a href="app.html">Try-On App</a>
+          <a href="voice.html">Voice App</a>
+          <a href="app-builder.html">App Builder</a>
+        </nav>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="section hero">
+  <div class="container">
+    <div class="wrap">
+      <span class="badge"><svg class="ic"><use href="#headset"/></svg> Coming Soon</span>
+      <h1>Humanized AI Voice Agents in 10+ Languages</h1>
+      <p class="lead">Realistic voice, real-time replies, and brand-matched tone—ready to plug into your site or phone system.</p>
+
+      <div class="hero-grid">
+        <!-- iPhone Call Demo -->
+        <div class="iphone-wrap">
+          <div class="iphone">
+            <div class="screen">
+              <div class="island" aria-hidden="true"></div>
+              <div class="status"><span>09:41</span><div class="bat"><div class="cell"></div><div class="nub"></div></div></div>
+
+              <div class="content">
+                <div class="avatar-ring" id="ring"><div class="avatar" aria-hidden="true"></div></div>
+                <div class="title-sm">Fluencai Agent</div>
+                <div class="subtle" id="callTimer">00:00</div>
+
+                <!-- Transparent, non-scroll chat -->
+                <div class="chat" id="chat">
+                  <div class="row"><div class="chip">You</div><div class="bubble">Hi, I’d like to reorder my last purchase.</div></div>
+                  <div class="row" data-agent><div class="chip agent">Agent</div><div class="bubble">Got it! Want it today or first thing tomorrow?</div></div>
+                  <div class="row"><div class="chip">You</div><div class="bubble">Tomorrow morning, please. Can you switch to French?</div></div>
+                  <div class="row" data-agent><div class="chip agent">Agent</div><div class="bubble">Bien sûr. Livraison demain matin entre 9h et 11h. Ça vous convient&nbsp;?</div></div>
+                </div>
+              </div>
+
+              <!-- Icons only; inset from edges -->
+              <div class="controls">
+                <div class="controls-inner">
+                  <button class="iconbtn" aria-label="Mute"><svg class="ic-sm"><use href="#phone"/></svg></button>
+                  <button class="iconbtn" aria-label="Auto language"><svg class="ic-sm"><use href="#globe2"/></svg></button>
+                  <button class="iconbtn" aria-label="Captions"><svg class="ic-sm"><use href="#chat"/></svg></button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Side Panel -->
+        <aside class="side">
+          <div class="card">
+            <div class="audio-wrap">
+              <div>
+                <div class="title-sm">Multilingual Voice Sample</div>
+                <div class="subtle">Natural tone · Real-time turn-taking</div>
+              </div>
+              <div class="playbar">
+                <button id="playBtn" class="playbtn" aria-label="Play demo" aria-pressed="false">
+                  <svg class="ic" id="ppIcon"><use href="#play"/></svg>
+                </button>
+                <div class="track">
+                  <span class="time" id="cur">0:00</span>
+                  <div class="railP"><div class="fillP" id="fillP"></div></div>
+                  <span class="time" id="dur">0:00</span>
+                </div>
+              </div>
+              <div class="wave" aria-hidden="true">
+                <div class="bar"></div><div class="bar"></div><div class="bar"></div>
+                <div class="bar"></div><div class="bar"></div><div class="bar"></div>
+              </div>
+              <audio id="demoAudio" preload="metadata">
+                <!-- Replace with your audio file -->
+                <source src="voice-demo.mp3" type="audio/mpeg"/>
+              </audio>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="title-sm" style="margin-bottom:6px">Languages</div>
+            <div class="langs" aria-label="Supported languages">
+              <!-- EN --> <div class="lang"><span class="flag"><svg viewBox="0 0 24 24"><defs><clipPath id="en"><circle cx="12" cy="12" r="12"/></clipPath></defs><g clip-path="url(#en)"><rect width="24" height="24" fill="#00247d"/><g fill="#fff"><rect x="10" width="4" height="24"/><rect y="10" width="24" height="4"/></g><g fill="#cf142b"><rect x="11" width="2" height="24"/><rect y="11" width="24" height="2"/></g></svg></span> EN</div>
+              <!-- FR --> <div class="lang"><span class="flag"><svg viewBox="0 0 24 24"><defs><clipPath id="fr"><circle cx="12" cy="12" r="12"/></clipPath></defs><g clip-path="url(#fr)"><rect width="8" height="24" fill="#0055a4"/><rect x="8" width="8" height="24" fill="#fff"/><rect x="16" width="8" height="24" fill="#ef4135"/></g></svg></span> FR</div>
+              <!-- ES --> <div class="lang"><span class="flag"><svg viewBox="0 0 24 24"><defs><clipPath id="es"><circle cx="12" cy="12" r="12"/></clipPath></defs><g clip-path="url(#es)"><rect width="24" height="24" fill="#c60b1e"/><rect y="6" width="24" height="12" fill="#ffc400"/></g></svg></span> ES</div>
+              <!-- DE --> <div class="lang"><span class="flag"><svg viewBox="0 0 24 24"><defs><clipPath id="de"><circle cx="12" cy="12" r="12"/></clipPath></defs><g clip-path="url(#de)"><rect width="24" height="8" fill="#000"/><rect y="8" width="24" height="8" fill="#dd0000"/><rect y="16" width="24" height="8" fill="#ffce00"/></g></svg></span> DE</div>
+              <!-- IT --> <div class="lang"><span class="flag"><svg viewBox="0 0 24 24"><defs><clipPath id="it"><circle cx="12" cy="12" r="12"/></clipPath></defs><g clip-path="url(#it)"><rect width="8" height="24" fill="#009246"/><rect x="8" width="8" height="24" fill="#fff"/><rect x="16" width="8" height="24" fill="#ce2b37"/></g></svg></span> IT</div>
+              <!-- PT --> <div class="lang"><span class="flag"><svg viewBox="0 0 24 24"><defs><clipPath id="pt"><circle cx="12" cy="12" r="12"/></clipPath></defs><g clip-path="url(#pt)"><rect width="10" height="24" fill="#006600"/><rect x="10" width="14" height="24" fill="#ff0000"/></g></svg></span> PT</div>
+              <!-- AR --> <div class="lang"><span class="flag"><svg viewBox="0 0 24 24"><defs><clipPath id="ar"><circle cx="12" cy="12" r="12"/></clipPath></defs><g clip-path="url(#ar)"><rect width="24" height="24" fill="#007a3d"/><rect y="8" width="24" height="8" fill="#fff"/></g></svg></span> AR</div>
+              <!-- ZH --> <div class="lang"><span class="flag"><svg viewBox="0 0 24 24"><defs><clipPath id="zh"><circle cx="12" cy="12" r="12"/></clipPath></defs><g clip-path="url(#zh)"><rect width="24" height="24" fill="#de2910"/><circle cx="6" cy="6" r="3" fill="#ffde00"/></g></svg></span> ZH</div>
+              <!-- JA --> <div class="lang"><span class="flag"><svg viewBox="0 0 24 24"><defs><clipPath id="ja"><circle cx="12" cy="12" r="12"/></clipPath></defs><g clip-path="url(#ja)"><rect width="24" height="24" fill="#fff"/><circle cx="12" cy="12" r="5.5" fill="#bc002d"/></g></svg></span> JA</div>
+              <!-- NL --> <div class="lang"><span class="flag"><svg viewBox="0 0 24 24"><defs><clipPath id="nl"><circle cx="12" cy="12" r="12"/></clipPath></defs><g clip-path="url(#nl)"><rect width="24" height="8" fill="#ae1c28"/><rect y="8" width="24" height="8" fill="#fff"/><rect y="16" width="24" height="8" fill="#21468b"/></g></svg></span> NL</div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CAPABILITIES -->
+<section class="section">
+  <div class="container">
+    <div class="wrap">
+      <div class="grid-3">
+        <div class="glass svc reveal"><div class="icon"><svg class="ic"><use href="#latency"/></svg></div><div><h3>Real-time responsiveness</h3><p>Low-latency turn-taking and barge-in for natural conversations.</p></div></div>
+        <div class="glass svc reveal"><div class="icon"><svg class="ic"><use href="#globe"/></svg></div><div><h3>10+ languages</h3><p>Serve customers globally with natural prosody and brand-tuned tone.</p></div></div>
+        <div class="glass svc reveal"><div class="icon"><svg class="ic"><use href="#api"/></svg></div><div><h3>Studio & API</h3><p>Design flows visually or integrate programmatically for custom logic.</p></div></div>
+      </div>
+      <div class="grid-3" style="margin-top:var(--s-3)">
+        <div class="glass svc reveal"><div class="icon"><svg class="ic"><use href="#plug"/></svg></div><div><h3>Website & telephony</h3><p>Embed on your site or route calls; connect CRM/helpdesk tools.</p></div></div>
+        <div class="glass svc reveal"><div class="icon"><svg class="ic"><use href="#sliders"/></svg></div><div><h3>Humanized delivery</h3><p>Emotion, pacing, and emphasis matched to your brand’s voice.</p></div></div>
+        <div class="glass svc reveal"><div class="icon"><svg class="ic"><use href="#lock"/></svg></div><div><h3>Privacy-first</h3><p>Secure processing and clear data controls for regulated workflows.</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- USE CASES — poster-style horizontal scroller -->
+<section class="section" aria-label="Use cases">
+  <div class="container">
+    <div class="wrap">
+      <h2 class="reveal" style="text-align:center">Templates &amp; Use Cases</h2>
+
+      <div class="ucv-scroll reveal" aria-label="Scroll horizontally for more">
+        <div class="ucv-rail">
+
+          <a class="ucv-tile" href="mailto:contact@fluencai.com?subject=Voice%20Customer%20Support">
+            <svg class="ucv-watermark"><use href="#headset"/></svg>
+            <div class="ucv-title">
+              <span class="ucv-ico"><svg class="ic"><use href="#headset"/></svg></span>
+              Customer Support
+            </div>
+            <p class="ucv-desc">24/7 help desk, ticket lookup, smart escalation and call summaries.</p>
+            <div class="ucv-badges">
+              <span class="ucv-badge">Zendesk</span><span class="ucv-badge">Freshdesk</span>
+            </div>
+          </a>
+
+          <a class="ucv-tile" href="mailto:contact@fluencai.com?subject=Voice%20Sales%20Qualification">
+            <svg class="ucv-watermark"><use href="#graph"/></svg>
+            <div class="ucv-title">
+              <span class="ucv-ico"><svg class="ic"><use href="#graph"/></svg></span>
+              Sales Qualification
+            </div>
+            <p class="ucv-desc">BANT questions, lead capture and instant routing to reps.</p>
+            <div class="ucv-badges">
+              <span class="ucv-badge">HubSpot</span><span class="ucv-badge">CRM</span>
+            </div>
+          </a>
+
+          <a class="ucv-tile" href="mailto:contact@fluencai.com?subject=Voice%20Appointment%20Booking">
+            <svg class="ucv-watermark"><use href="#phone"/></svg>
+            <div class="ucv-title">
+              <span class="ucv-ico"><svg class="ic"><use href="#phone"/></svg></span>
+              Appointment Booking
+            </div>
+            <p class="ucv-desc">Availability checks, rescheduling and reminders via SMS/email.</p>
+            <div class="ucv-badges">
+              <span class="ucv-badge">Google Cal</span><span class="ucv-badge">Outlook</span>
+            </div>
+          </a>
+
+          <a class="ucv-tile" href="mailto:contact@fluencai.com?subject=Voice%20Order%20Status">
+            <svg class="ucv-watermark"><use href="#plug"/></svg>
+            <div class="ucv-title">
+              <span class="ucv-ico"><svg class="ic"><use href="#plug"/></svg></span>
+              Order Status
+            </div>
+            <p class="ucv-desc">Self-serve tracking, changes and delivery updates.</p>
+            <div class="ucv-badges">
+              <span class="ucv-badge">Shopify</span><span class="ucv-badge">Woo</span>
+            </div>
+          </a>
+
+          <a class="ucv-tile" href="mailto:contact@fluencai.com?subject=Voice%20FAQs%20%26%20Knowledge">
+            <svg class="ucv-watermark"><use href="#chat"/></svg>
+            <div class="ucv-title">
+              <span class="ucv-ico"><svg class="ic"><use href="#chat"/></svg></span>
+              FAQs &amp; Knowledge
+            </div>
+            <p class="ucv-desc">Answers from docs, policies, and your help center.</p>
+          </a>
+
+          <a class="ucv-tile" href="mailto:contact@fluencai.com?subject=Voice%20Surveys%20%26%20NPS">
+            <svg class="ucv-watermark"><use href="#sliders"/></svg>
+            <div class="ucv-title">
+              <span class="ucv-ico"><svg class="ic"><use href="#sliders"/></svg></span>
+              Surveys &amp; NPS
+            </div>
+            <p class="ucv-desc">Automated post-interaction feedback collection.</p>
+          </a>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section" aria-label="FAQ">
+  <div class="container">
+    <div class="faq-wrap">
+      <h2 class="reveal" style="text-align:center">Frequently Asked Questions</h2>
+      <div class="faq">
+        <div class="faq-item reveal">
+          <input type="checkbox" id="q1">
+          <label for="q1">Is Fluencai Voice available today?
+            <svg class="chev"><use href="#chev"/></svg>
+          </label>
+          <div class="ans"><div>We’re in private preview. Request a demo and we’ll reach out with early access options.</div></div>
+        </div>
+        <div class="faq-item reveal">
+          <input type="checkbox" id="q2">
+          <label for="q2">Which languages do you support?
+            <svg class="chev"><use href="#chev"/></svg>
+          </label>
+          <div class="ans"><div>We’re launching with humanized voices in 10+ languages (see the list above), with more on the way.</div></div>
+        </div>
+        <div class="faq-item reveal">
+          <input type="checkbox" id="q3">
+          <label for="q3">Do you integrate into websites?
+            <svg class="chev"><use href="#chev"/></svg>
+          </label>
+          <div class="ans"><div>Yes. You can embed a web widget on your site or route voice via telephony. Connectors to popular CRMs/helpdesks are planned.</div></div>
+        </div>
+        <div class="faq-item reveal">
+          <input type="checkbox" id="q4">
+          <label for="q4">Do you offer an API?
+            <svg class="chev"><use href="#chev"/></svg>
+          </label>
+          <div class="ans"><div>Yes. A developer API and a visual studio are planned for GA; technical preview is available by request.</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER CTA -->
+<section id="waitlist" class="section">
+  <div class="container">
+    <div class="wrap">
+      <div class="glass" style="text-align:center">
+        <h2>Get early access to Fluencai Voice</h2>
+        <p class="lead" style="margin-top:6px">Join the waitlist and be first to try it.</p>
+        <a class="btn" href="mailto:contact@fluencai.com?subject=Fluencai%20Voice%20Early%20Access"><svg class="ic"><use href="#mail"/></svg> Join the Waitlist</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="foot-grid">
+      <div class="foot-col">
+        <h4>Menu</h4>
+        <a href="index.html">Home</a>
+        <a href="index.html#features">AI Branding</a>
+        <a href="app.html">Try-On App</a>
+        <a href="voice.html">Voice App</a>
+        <a href="app-builder.html">App Builder</a>
+      </div>
+      <div class="foot-col">
+        <h4>Policy</h4>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="terms.html">Terms &amp; Conditions</a>
+      </div>
+      <div class="foot-col">
+        <h4>Contact</h4>
+        <a href="mailto:contact@fluencai.com">contact@fluencai.com</a>
+        <a href="tel:+33699052406">+33&nbsp;6&nbsp;99&nbsp;05&nbsp;24&nbsp;06</a>
+        <p>Paris, France</p>
+        <p>Dubai, United Arab Emirates</p>
+        <p>Casablanca, Morocco</p>
+      </div>
+      <div class="foot-col">
+        <h4>Social</h4>
+        <a href="https://www.instagram.com/fluencai/#" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://www.linkedin.com/company/fluencai" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="https://www.facebook.com/fluencai" target="_blank" rel="noopener">Facebook</a>
+      </div>
+    </div>
+    <div class="foot-copy">© 2024 Fluencai</div>
+  </div>
+</footer>
+
+<script>
+  // Scroll reveal for sections
+  (function(){
+    const els = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
+    }, {threshold: 0.08});
+    els.forEach(el=>io.observe(el));
+  })();
+
+  // Call timer
+  (function(){
+    const lab = document.getElementById('callTimer');
+    let t = 0; setInterval(()=>{ t++; const m=String(Math.floor(t/60)).padStart(2,'0'); const s=String(t%60).padStart(2,'0'); lab.textContent=m+':'+s; }, 1000);
+  })();
+
+  // Chat sequence + avatar speaking glow
+  (function(){
+    const rows = Array.from(document.querySelectorAll('#chat .row'));
+    const ring = document.getElementById('ring');
+    rows.forEach((row, i)=>{
+      setTimeout(()=>{
+        row.classList.add('in');
+        if(row.hasAttribute('data-agent')){ ring.classList.add('pulse'); }
+        else { ring.classList.remove('pulse'); }
+      }, 900 * i);
+    });
+    // remove pulse after last
+    setTimeout(()=>ring.classList.remove('pulse'), 900 * rows.length + 600);
+  })();
+
+  // Audio player
+  (function(){
+    const audio = document.getElementById('demoAudio');
+    const playBtn = document.getElementById('playBtn');
+    const ppIcon = document.getElementById('ppIcon');
+    const fill = document.getElementById('fillP');
+    const cur = document.getElementById('cur');
+    const dur = document.getElementById('dur');
+
+    function fmt(t){ if(!isFinite(t)) return '0:00';
+      const m=Math.floor(t/60); const s=Math.floor(t%60).toString().padStart(2,'0'); return m+':'+s; }
+    audio?.addEventListener('loadedmetadata', ()=>{ dur.textContent = fmt(audio.duration); });
+    audio?.addEventListener('timeupdate', ()=>{ cur.textContent = fmt(audio.currentTime);
+      const p=(audio.currentTime/(audio.duration||1))*100; fill.style.width=p+'%'; });
+    audio?.addEventListener('ended', ()=>{ playBtn.setAttribute('aria-pressed','false'); ppIcon.innerHTML = '<use href="#play"/>'; });
+    playBtn?.addEventListener('click', ()=>{
+      const playing = playBtn.getAttribute('aria-pressed') === 'true';
+      if(!playing){ audio.play(); playBtn.setAttribute('aria-pressed','true'); ppIcon.innerHTML = '<use href="#pause"/>'; }
+      else{ audio.pause(); playBtn.setAttribute('aria-pressed','false'); ppIcon.innerHTML = '<use href="#play"/>'; }
+    });
+  })();
+  
+</script>
+<script>
+  // Mobile menu (right-side sheet) — minimal + focus trap
+  (function(){
+    const html=document.documentElement;
+    const burger=document.getElementById('hamburger');
+    const panel=document.getElementById('mobileNav');
+    const closeBtn=document.getElementById('closeMobile');
+    const FOCUSABLE = 'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])';
+    let lastFocused = null;
+
+    function getFocusables(){
+      return Array.from(panel.querySelectorAll(FOCUSABLE)).filter(el => el.offsetParent !== null || panel === el);
+    }
+    function open(){
+      lastFocused = document.activeElement;
+      panel.hidden = false;
+      requestAnimationFrame(()=>{
+        panel.classList.add('show');
+        burger.setAttribute('aria-expanded','true');
+        html.classList.add('no-scroll');
+        const f = getFocusables()[0]; if (f) f.focus();
+      });
+    }
+    function shut(){
+      panel.classList.remove('show');
+      burger.setAttribute('aria-expanded','false');
+      html.classList.remove('no-scroll');
+      setTimeout(()=>{ panel.hidden = true; if (lastFocused) lastFocused.focus(); }, 200);
+    }
+    function trap(e){
+      if (panel.hidden || e.key !== 'Tab') return;
+      const nodes = getFocusables(); if (!nodes.length) return;
+      const first = nodes[0], last = nodes[nodes.length-1];
+      if (e.shiftKey && document.activeElement === first){ e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last){ e.preventDefault(); first.focus(); }
+    }
+    burger?.addEventListener('click', open);
+    closeBtn?.addEventListener('click', shut);
+    panel?.addEventListener('click', e => { if (e.target === panel) shut(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape' && !panel.hidden) shut(); });
+    document.addEventListener('keydown', trap);
+    panel?.addEventListener('click', e => { const t=e.target; if (t.tagName==='A' && t.getAttribute('href')) shut(); });
+  })();
+</script>
+
+</body>
+</html>

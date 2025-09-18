@@ -1,0 +1,457 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Fluencai App — Your AI Outfit Stylist</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,300;8..144,400;8..144,700;8..144,900&display=swap" rel="stylesheet">
+
+<!-- Favicon / app icons -->
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#0f1221">
+<meta name="theme-color" content="#d8bdff">
+
+<style>
+  :root{
+    --brand-a:#d8bdff; --brand-b:#c2e9fb;
+    --bg:linear-gradient(180deg,var(--brand-a) 0%, var(--brand-b) 100%);
+    --ink:#0f1221; --ink-2:#30364a; --line:#e8eaf2;
+    --container:1120px; --gutter:24px;
+    --r-lg:20px; --shadow-1:0 8px 24px rgba(16,18,34,.08), 0 2px 10px rgba(16,18,34,.05);
+    --shadow-2:0 18px 48px rgba(16,18,34,.12), 0 8px 24px rgba(16,18,34,.08);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;color:var(--ink);font-family:"Roboto Flex",system-ui,-apple-system,Segoe UI,Helvetica,Arial,sans-serif}
+  body{background:var(--bg);background-attachment:fixed}
+  a{color:inherit;text-decoration:none}
+  img,video{display:block;max-width:100%;height:auto}
+
+  /* Layout */
+  .container{max-width:var(--container);margin-inline:auto;padding-inline:var(--gutter)}
+  .section{padding:64px 0}
+  .tight-below{padding-bottom:36px} /* tighter gap under hero */
+
+  /* Type */
+  h1{margin:0 0 12px;font-size:clamp(42px,6.5vw,84px);line-height:1.03;letter-spacing:-.01em}
+  h2{margin:0 0 12px;font-size:clamp(24px,3.8vw,32px);line-height:1.25}
+  p{margin:0;color:var(--ink-2);line-height:1.6}
+
+  /* Buttons */
+  .btn{display:inline-flex;align-items:center;gap:10px;padding:12px 18px;border-radius:999px;border:1px solid var(--line);background:linear-gradient(135deg,var(--brand-a),var(--brand-b));color:#0f1221;font-weight:800;box-shadow:var(--shadow-1)}
+  .btn-icon{display:inline-grid;place-items:center;width:44px;height:44px;border-radius:12px;border:1px solid var(--line);background:#fff;box-shadow:var(--shadow-1)}
+  .ic{width:24px;height:24px;vertical-align:-4px}
+
+  /* Grid */
+  .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:22px;align-items:center}
+  @media (max-width:980px){.grid-2{grid-template-columns:1fr}}
+
+  /* Header — same as index (right hamburger, icon-only contact on phones) */
+  .header{position:sticky;top:calc(12px + env(safe-area-inset-top,0px));z-index:10;padding:12px 0}
+  .nav{display:flex;align-items:center;justify-content:space-between;background:#fffffff2;border:1px solid var(--line);border-radius:999px;padding:10px 12px;box-shadow:var(--shadow-1)}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:900}
+  .logo{width:26px;height:26px;border-radius:999px;background:linear-gradient(135deg,var(--brand-a),var(--brand-b))}
+  .menu{display:flex;gap:28px;align-items:center}
+  @media (max-width:900px){.menu{display:none}}
+  .hamburger{display:none;align-items:center;justify-content:center;width:44px;height:44px;border-radius:12px;border:1px solid var(--line);background:#fff;box-shadow:var(--shadow-1)}
+  .hamburger svg{width:22px;height:22px}
+  .contact-desktop{display:inline-flex}
+  .contact-icon{display:none}
+  @media (max-width:900px){
+    .hamburger{display:inline-grid}
+    .contact-desktop{display:none}
+    .contact-icon{display:inline-grid}
+  }
+
+  .mobile-nav[hidden]{display:none}
+  .mobile-nav{position:fixed;inset:0;z-index:50;backdrop-filter:blur(8px) saturate(1.1);background:rgba(15,18,33,.08)}
+  .mobile-panel{
+    position:absolute;top:0;right:0;height:100%;width:min(84vw,420px);
+    background:#ffffff;border-left:1px solid var(--line);box-shadow:var(--shadow-2);
+    padding:16px;display:flex;flex-direction:column;gap:12px;
+    transform:translateX(10%);opacity:0;transition:transform .25s ease,opacity .25s ease
+  }
+  .mobile-nav.show .mobile-panel{transform:none;opacity:1}
+  .mobile-head{display:flex;align-items:center;justify-content:space-between}
+  .mobile-links{display:grid;gap:10px;margin-top:8px}
+  .mobile-links a{padding:12px 14px;border:1px solid var(--line);border-radius:14px;background:#fff;font-weight:800}
+  .no-scroll{overflow:hidden;touch-action:none}
+
+  /* iPhone showcase */
+  .device{
+    width:clamp(260px, 32vw, 360px);
+    aspect-ratio:9/19;
+    margin:0 auto;
+    border-radius:46px;
+    background:#0b0d14;
+    border:10px solid #0f1320;
+    box-shadow:0 28px 72px rgba(10,12,20,.35), inset 0 1px 0 rgba(255,255,255,.06);
+    position:relative; will-change:transform;
+    animation:float 7s ease-in-out infinite;
+  }
+  .device::before{
+    content:"";position:absolute;top:10px;left:50%;transform:translateX(-50%);
+    width:42%;height:22px;background:#000;border-radius:16px;
+  }
+  .screen{position:absolute;inset:10px;border-radius:36px;overflow:hidden;background:#000;border:1px solid #121627}
+  .media-inset{position:absolute;inset:16px 14px 16px 14px;transform: scale(1.08); border-radius:26px;overflow:hidden;background:#000}
+  .media-inset > img, .media-inset > video{
+    width:100%;height:100%;object-fit:contain;transform:scale(1.18);object-position:center;background:#000
+  }
+  @keyframes float{
+    0%,100%{transform:translateY(0)}
+    50%{transform:translateY(-6px)}
+  }
+
+  /* Store buttons */
+  .store-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:14px}
+  .store{display:inline-flex;align-items:center;gap:10px;padding:12px 18px;border-radius:14px;border:1px solid var(--line);background:#fff;color:#0f1221;font-weight:800;box-shadow:var(--shadow-1)}
+  @media (max-width:900px){
+    .store-row{justify-content:center} /* center on phones/tablets */
+  }
+
+  /* Feature cards (glass) */
+  .glass{background:rgba(255,255,255,.42); border:1px solid rgba(255,255,255,.35); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-radius:var(--r-lg); padding:20px}
+  .svc{display:grid;grid-template-columns:64px 1fr;gap:16px;align-items:flex-start}
+  .svc .icon{width:64px;height:64px;border-radius:14px;border:1px solid rgba(255,255,255,.6);display:grid;place-items:center;background:linear-gradient(135deg,var(--brand-a),var(--brand-b))}
+  .svc .icon .ic{width:28px;height:28px}
+
+  /* Feedback marquee */
+  .ticker{overflow:hidden;background:#000;color:#fff}
+  .track{display:flex;gap:48px;align-items:center;white-space:nowrap;will-change:transform;animation:scrollX 28s linear infinite}
+  .q{display:inline-flex;gap:10px;align-items:center;padding:18px 0}
+  .quote{font-weight:800}.by{opacity:.8}
+  @keyframes scrollX{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+  .ticker:hover .track{animation-play-state:paused}
+
+  /* Reveal animation */
+  .reveal{opacity:0;transform:translateY(12px);transition:opacity .5s ease, transform .5s ease}
+  .reveal.in{opacity:1;transform:none}
+  .reveal.delay-1{transition-delay:.08s}
+  .reveal.delay-2{transition-delay:.16s}
+  .reveal.delay-3{transition-delay:.24s}
+  @media (prefers-reduced-motion:reduce){
+    *{animation:none !important;transition:none !important}
+  }
+
+  /* Tighter spacing on phones */
+  @media (max-width:900px){
+    .section{padding:40px 0}
+    .tight-below{padding-bottom:24px}
+  }
+
+  /* Footer */
+  footer.site-footer{border-top:1px solid #ffffff;padding:40px 0 34px}
+  .site-footer .container{max-width:var(--container);margin-inline:auto;padding-inline:var(--gutter)}
+  .foot-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px 28px;align-items:start}
+  .foot-col h4{margin:0 0 12px;font-size:18px;font-weight:900;line-height:1.2}
+  .foot-col a,.foot-col p{display:block;margin:6px 0;color:var(--ink-2);text-decoration:none;line-height:1.6}
+  .foot-col a:hover{text-decoration:underline}
+  .foot-copy{margin-top:22px;text-align:center;font-size:13.5px;opacity:.75}
+  @media (max-width:900px){.foot-grid{grid-template-columns:1fr 1fr}}
+  @media (max-width:560px){.foot-grid{grid-template-columns:1fr}.foot-copy{margin-top:18px}}
+
+  /* HERO centering + layout */
+.hero .intro { text-align:center }                /* center the H1 + subtext */
+.store-row { justify-content:center }             /* center the buttons on all breakpoints */
+
+/* Center the hero title/subtitle */
+.hero .intro{ text-align:center; max-width:740px; margin:0 auto; }
+
+/* Keep buttons centered under the phone */
+.store-row{ justify-content:center; }
+
+/* Optional: a little tighter spacing under hero on phones */
+@media (max-width:900px){
+  .hero.tight-below{ padding-bottom:32px; }
+}
+
+
+/* Slightly tighter spacing under the hero (already present but ensure it applies) */
+.hero.tight-below { padding-bottom: 32px; }
+
+/* Desktop shows original buttons under the title; mobile shows the copy under the phone */
+.store-row--mobile{ display:none; }
+
+@media (max-width:980px){
+  .store-row--desktop{ display:none; }              /* hide desktop buttons on phone */
+  .store-row--mobile{ 
+    display:flex; 
+    justify-content:center; 
+    gap:12px; 
+    flex-wrap:wrap; 
+    margin-top:16px; 
+  }
+}
+
+
+</style>
+</head>
+<body>
+
+<!-- ICONS -->
+<svg aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden">
+  <symbol id="mail" viewBox="0 0 24 24"><path fill="currentColor" d="M4 6h16a2 2 0 0 1 2 2v.2l-10 6.25L2 8.2V8a2 2 0 0 1 2-2Zm16 12H4a2 2 0 0 1-2-2V9.3l9.2 5.75a2 2 0 0 0 2.1 0L22 9.3V16a2 2 0 0 1-2 2Z"/></symbol>
+  <symbol id="ext" viewBox="0 0 24 24"><path fill="currentColor" d="M14 3h7v7h-2V6.41l-9.3 9.3l-1.4-1.42l9.3-9.3H14V3ZM5 5h5v2H7v10h10v-3h2v5H5V5Z"/></symbol>
+  <symbol id="apple" viewBox="0 0 24 24"><path fill="currentColor" d="M16.4 13.2c0 3.2 2.8 4.3 2.9 4.4c-1.2 1.8-3 2-3.6 2c-1.5.2-2.9-1-3.6-1s-1.9.9-3.1.9c-1.6-.1-3.1-.9-3.9-2.3c-1.7-2.9-.4-7.1 1.2-9.5C7.3 6.6 8.6 6 9.7 6c1.4 0 2.3.9 3.5.9c1.1 0 2.1-.9 3.6-.9c1.2 0 2.6.6 3.6 1.8c-3.2 1.7-3 4.4-3 5.4Zm-2.2-10c.7-.9 1.2-2.1 1.1-3.2c-1.1.1-2.3.7-3 1.6c-.7.8-1.2 2-1.1 3.1c1.1.1 2.3-.6 3-1.5Z"/></symbol>
+  <symbol id="google" viewBox="0 0 24 24"><path fill="currentColor" d="M1 3l13 9L1 21V3Zm14 0h8v18h-8V3Z"/></symbol>
+  <symbol id="camera" viewBox="0 0 24 24"><path fill="currentColor" d="M9 4h6l1.2 2H20a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h3.8L9 4Zm3 12a4 4 0 1 0 0-8a4 4 0 0 0 0 8Z"/></symbol>
+  <symbol id="spark" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2l2.2 5.6L20 10l-5.6 2.4L12 18l-2.4-5.6L4 10l5.6-2.4L12 2Z"/></symbol>
+  <symbol id="credit" viewBox="0 0 24 24"><path fill="currentColor" d="M3 6h18v12H3V6Zm2 3v2h6V9H5Z"/></symbol>
+  <symbol id="lock" viewBox="0 0 24 24"><path fill="currentColor" d="M12 1a5 5 0 0 1 5 5v3h1a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h1V6a5 5 0 0 1 5-5Zm0 4a2 2 0 0 0-2 2v2h4V7a2 2 0 0 0-2-2Z"/></symbol>
+  <symbol id="quote" viewBox="0 0 24 24"><path fill="currentColor" d="M10 7v10H4V11a4 4 0 0 1 4-4h2Zm10 0v10h-6V11a4 4 0 0 1 4-4h2Z"/></symbol>
+</svg>
+
+<!-- Header -->
+<header class="header">
+  <div class="container">
+    <div class="nav">
+      <div class="brand"><span class="logo"></span> Fluencai</div>
+      <nav class="menu" aria-label="Primary">
+        <a href="index.html">Home</a>
+        <a href="index.html#features">AI Branding</a>
+        <a href="app.html">Try-On App</a>
+        <a href="voice.html">Voice App</a>
+        <a href="app-builder.html">App Builder</a>
+      </nav>
+      <div style="display:flex;gap:8px;align-items:center">
+        <a class="btn contact-desktop" href="index.html#contact"><svg class="ic"><use href="#mail"/></svg> Get Notified</a>
+        <a class="btn-icon contact-icon" href="index.html#contact" aria-label="Contact"><svg class="ic"><use href="#mail"/></svg></a>
+        <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobileNav">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 6h18M3 12h18M3 18h18"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile nav (right sheet) -->
+  <div class="mobile-nav" id="mobileNav" role="dialog" aria-modal="true" aria-labelledby="mobileTitle" hidden>
+    <div class="mobile-panel">
+      <div class="mobile-head">
+        <div class="brand" id="mobileTitle"><span class="logo"></span> Fluencai</div>
+        <button class="hamburger" id="closeMobile" aria-label="Close menu">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 6l12 12M18 6L6 18"/>
+          </svg>
+        </button>
+      </div>
+      <nav class="mobile-links" aria-label="Mobile">
+        <a href="index.html#hero">Home</a>
+        <a href="index.html#features">AI Branding</a>
+        <a href="app.html">Try-On App</a>
+        <a href="voice.html">Voice App</a>
+        <a href="app-builder.html">App Builder</a>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="section tight-below hero" style="padding-top:48px">
+  <div class="container grid-2">
+    <!-- LEFT: title + buttons (desktop) -->
+    <div class="intro reveal">
+      <h1>Your AI outfit stylist is just a tap away</h1>
+      <p style="margin-top:6px">Available soon on the App Store and Google Play.</p>
+
+      <!-- Desktop buttons (shown on ≥981px) -->
+      <div class="store-row store-row--desktop">
+        <a class="store" href="#" aria-label="App Store coming soon"><svg class="ic"><use href="#apple"/></svg> App Store (Soon)</a>
+        <a class="store" href="#" aria-label="Google Play coming soon"><svg class="ic"><use href="#google"/></svg> Play Store (Soon)</a>
+      </div>
+    </div>
+
+    <!-- RIGHT: phone -->
+    <div class="col-phone reveal delay-1">
+      <div class="device" id="demoPhone" aria-label="Fluencai app showcased in iPhone frame">
+        <div class="screen">
+          <div class="media-inset">
+            <img src="Fluencai Video 2-2.gif" alt="Fluencai app demo">
+          </div>
+        </div>
+      </div>
+
+      <!-- Mobile buttons (shown on ≤980px) -->
+      <div class="store-row store-row--mobile">
+        <a class="store" href="#" aria-label="App Store coming soon"><svg class="ic"><use href="#apple"/></svg> App Store (Soon)</a>
+        <a class="store" href="#" aria-label="Google Play coming soon"><svg class="ic"><use href="#google"/></svg> Play Store (Soon)</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- FEATURES -->
+<section class="section">
+  <div class="container grid-2">
+    <div class="glass svc reveal">
+      <div class="icon"><svg class="ic"><use href="#camera"/></svg></div>
+      <div>
+        <h2>Hyper-realistic outfit edits</h2>
+        <p>Photorealistic swaps that match your pose, lighting, and fabric details for content that looks truly shot.</p>
+      </div>
+    </div>
+    <div class="glass svc reveal delay-1">
+      <div class="icon"><svg class="ic"><use href="#spark"/></svg></div>
+      <div>
+        <h2>Prompt-to-style in seconds</h2>
+        <p>Type any vibe—“black leather jacket,” “Paris style,” “fluffy blue dress”—and generate a tailored look instantly.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="container grid-2" style="margin-top:22px">
+    <div class="glass svc reveal delay-2">
+      <div class="icon"><svg class="ic"><use href="#credit"/></svg></div>
+      <div>
+        <h2>Flexible credits & plans</h2>
+        <p>Every edit costs 1 credit. Top up as you go or choose monthly/yearly—control cost and predict spend.</p>
+      </div>
+    </div>
+    <div class="glass svc reveal delay-3">
+      <div class="icon"><svg class="ic"><use href="#lock"/></svg></div>
+      <div>
+        <h2>Private & secure by design</h2>
+        <p>Secure processing pipeline and safe account storage—no sketchy uploads, just peace of mind.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEEDBACK TICKER -->
+<section aria-label="What people are saying" class="ticker reveal">
+  <div class="track">
+    <div class="q"><svg class="ic" style="color:#fff"><use href="#quote"/></svg><span class="quote">“The edits look so real.”</span><span class="by">— Salma K., Lifestyle Influencer</span></div>
+    <div class="q"><svg class="ic" style="color:#fff"><use href="#quote"/></svg><span class="quote">“Turned a shoot around in hours.”</span><span class="by">— Marie P., Brand Manager</span></div>
+    <div class="q"><svg class="ic" style="color:#fff"><use href="#quote"/></svg><span class="quote">“My best-performing IG post.”</span><span class="by">— Ahmed Al., Creator</span></div>
+    <div class="q"><svg class="ic" style="color:#fff"><use href="#quote"/></svg><span class="quote">“The edits look so real.”</span><span class="by">— Salma K., Lifestyle Influencer</span></div>
+    <div class="q"><svg class="ic" style="color:#fff"><use href="#quote"/></svg><span class="quote">“Turned a shoot around in hours.”</span><span class="by">— Marie P., Brand Manager</span></div>
+    <div class="q"><svg class="ic" style="color:#fff"><use href="#quote"/></svg><span class="quote">“My best-performing IG post.”</span><span class="by">— Ahmed Al., Creator</span></div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="foot-grid">
+      <div class="foot-col">
+        <h4>Menu</h4>
+        <a href="index.html">Home</a>
+        <a href="index.html#features">AI Branding</a>
+        <a href="app.html">Try-On App</a>
+        <a href="voice.html">Voice App</a>
+        <a href="app-builder.html">App Builder</a>
+      </div>
+      <div class="foot-col">
+        <h4>Policy</h4>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="terms.html">Terms &amp; Conditions</a>
+      </div>
+      <div class="foot-col">
+        <h4>Contact</h4>
+        <a href="mailto:contact@fluencai.com">contact@fluencai.com</a>
+        <a href="tel:+33699052406">+33&nbsp;6&nbsp;99&nbsp;05&nbsp;24&nbsp;06</a>
+        <p>Paris, France</p>
+        <p>Dubai, United Arab Emirates</p>
+        <p>Casablanca, Morocco</p>
+      </div>
+      <div class="foot-col">
+        <h4>Social</h4>
+        <a href="https://www.instagram.com/fluencai/#" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://www.linkedin.com/company/fluencai" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="https://www.facebook.com/fluencai" target="_blank" rel="noopener">Facebook</a>
+      </div>
+    </div>
+    <div class="foot-copy">© 2024 Fluencai</div>
+  </div>
+</footer>
+
+<script>
+  // Reveal on scroll
+  (function(){
+    const els = document.querySelectorAll('.reveal');
+    if(!els.length) return;
+    const obs = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting){
+          e.target.classList.add('in');
+          obs.unobserve(e.target);
+        }
+      });
+    }, {rootMargin:"0px 0px -10% 0px", threshold:0.1});
+    els.forEach(el=>obs.observe(el));
+  })();
+
+  // Mobile menu — right-side sheet + focus trap (same as index)
+  (function(){
+    const html=document.documentElement;
+    const burger=document.getElementById('hamburger');
+    const panel=document.getElementById('mobileNav');
+    const closeBtn=document.getElementById('closeMobile');
+    const FOCUSABLE = 'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])';
+    let lastFocused = null;
+
+    function getFocusables(){
+      return Array.from(panel.querySelectorAll(FOCUSABLE)).filter(el => el.offsetParent !== null || panel === el);
+    }
+    function open(){
+      lastFocused = document.activeElement;
+      panel.hidden = false;
+      requestAnimationFrame(()=>{
+        panel.classList.add('show');
+        burger.setAttribute('aria-expanded','true');
+        html.classList.add('no-scroll');
+        const f = getFocusables()[0]; if (f) f.focus();
+      });
+    }
+    function shut(){
+      panel.classList.remove('show');
+      burger.setAttribute('aria-expanded','false');
+      html.classList.remove('no-scroll');
+      setTimeout(()=>{ panel.hidden = true; if (lastFocused) lastFocused.focus(); }, 200);
+    }
+    function trap(e){
+      if (panel.hidden || e.key !== 'Tab') return;
+      const nodes = getFocusables(); if (!nodes.length) return;
+      const first = nodes[0], last = nodes[nodes.length-1];
+      if (e.shiftKey && document.activeElement === first){ e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last){ e.preventDefault(); first.focus(); }
+    }
+    if (burger && panel){
+      burger.addEventListener('click', open);
+      if (closeBtn) closeBtn.addEventListener('click', shut);
+      panel.addEventListener('click', e => { if (e.target === panel) shut(); });
+      document.addEventListener('keydown', e => { if (e.key === 'Escape' && !panel.hidden) shut(); });
+      document.addEventListener('keydown', trap);
+      panel.addEventListener('click', e => { const t=e.target; if (t.tagName==='A' && t.getAttribute('href')) shut(); });
+    }
+  })();
+
+  // Gentle parallax on the phone (desktop only)
+  (function(){
+    const phone = document.getElementById('demoPhone');
+    if(!phone) return;
+    const mq = window.matchMedia('(pointer:fine)');
+    if(!mq.matches) return; // avoid on touch devices
+    let raf;
+    function onMove(e){
+      if(raf) cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(()=>{
+        const rect = phone.getBoundingClientRect();
+        const cx = rect.left + rect.width/2;
+        const cy = rect.top + rect.height/2;
+        const dx = (e.clientX - cx)/rect.width;
+        const dy = (e.clientY - cy)/rect.height;
+        phone.style.transform = `translateY(-6px) rotateX(${ -dy*4 }deg) rotateY(${ dx*6 }deg)`;
+      });
+    }
+    function reset(){ phone.style.transform = 'translateY(0)'; }
+    window.addEventListener('mousemove', onMove);
+    window.addEventListener('mouseleave', reset);
+  })();
+</script>
+</body>
+</html>
