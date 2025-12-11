@@ -876,6 +876,19 @@
     }
 
     /* Sections & glass features */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 22px;
+      align-items: center
+    }
+
+    @media (max-width:980px) {
+      .grid-2 {
+        grid-template-columns: 1fr
+      }
+    }
+
     .grid-3 {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -893,7 +906,7 @@
       position: relative;
       background: linear-gradient(135deg, rgba(255, 255, 255, .58) 0%, rgba(255, 255, 255, .42) 100%);
       border-radius: var(--r-lg);
-      padding: 18px;
+      padding: 22px;
       box-shadow: var(--shadow-1);
       transition: transform .3s var(--ease-smooth), box-shadow .3s var(--ease-smooth);
     }
@@ -924,16 +937,16 @@
 
     .svc {
       display: grid;
-      grid-template-columns: 64px 1fr;
-      gap: 14px;
+      grid-template-columns: 68px 1fr;
+      gap: 18px;
       align-items: flex-start
     }
 
     .svc .icon {
       position: relative;
-      width: 64px;
-      height: 64px;
-      border-radius: 14px;
+      width: 68px;
+      height: 68px;
+      border-radius: 16px;
       border: 2px solid rgba(255, 255, 255, .7);
       display: grid;
       place-items: center;
@@ -1774,7 +1787,7 @@
               </svg></div>
             <div>
               <h3>Humanized delivery</h3>
-              <p>Emotion, pacing, and emphasis matched to your brand’s voice.</p>
+              <p>Emotion, pacing, and emphasis matched to your brand's voice.</p>
             </div>
           </div>
           <div class="glass svc reveal">
