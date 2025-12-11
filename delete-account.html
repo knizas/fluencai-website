@@ -1,372 +1,904 @@
 <!doctype html>
 <html lang="en">
+
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Request Account Deletion — Fluencai</title>
-<meta name="description" content="Request deletion of your Fluencai account. We’re sorry to see you go." />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Request Account Deletion — Fluencai</title>
+  <meta name="description" content="Request deletion of your Fluencai account. We’re sorry to see you go." />
 
-<!-- Favicons -->
-<link rel="icon" href="/favicon.svg" type="image/svg+xml">
-<link rel="icon" href="/favicon.ico" sizes="any">
-<link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
+  <!-- Favicons -->
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
 
-<link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,300;8..144,400;8..144,700;8..144,900&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,300;8..144,400;8..144,700;8..144,900&display=swap"
+    rel="stylesheet">
 
-<style>
-  :root{
-    --brand-a:#d8bdff; --brand-b:#c2e9fb;
-    --bg:linear-gradient(180deg,var(--brand-a) 0%, var(--brand-b) 100%);
-    --ink:#0f1221; --ink-2:#30364a; --line:#e8eaf2;
+  <style>
+    :root {
+      /* Enhanced Color System */
+      --brand-a: #d8bdff;
+      --brand-b: #c2e9fb;
+      --brand-gradient: linear-gradient(135deg, var(--brand-a), var(--brand-b));
+      --accent-purple-light: #e8d4ff;
+      --accent-purple-dark: #b89ef5;
+      --accent-blue-light: #d4f1fc;
+      --accent-blue-dark: #9dd9f0;
+      --ink: #0a0d14;
+      --ink-2: #2a3142;
+      --ink-3: #4a5568;
+      --line: #e2e6f5;
+      --surface: #f8f9fd;
+      --bg: linear-gradient(180deg, var(--brand-a) 0%, var(--brand-b) 100%);
+      --container: 1120px;
+      --wrap: 980px;
+      --gutter: 24px;
+      --r-sm: 12px;
+      --r-md: 16px;
+      --r-lg: 20px;
+      --r-xl: 24px;
+      --shadow-1: 0 8px 32px rgba(16, 18, 34, .08), 0 2px 12px rgba(16, 18, 34, .04), inset 0 1px 0 rgba(255, 255, 255, .6);
+      --shadow-2: 0 18px 48px rgba(16, 18, 34, .12), 0 8px 24px rgba(16, 18, 34, .08);
+      --shadow-glow: 0 0 40px rgba(216, 189, 255, .3);
+      --s-1: 8px;
+      --s-2: 12px;
+      --s-3: 18px;
+      --s-4: 24px;
+      --s-5: 32px;
+      --s-6: 44px;
+      --top-safe: 84px;
+      --controls-h: 92px;
+      --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+      --ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      /* button sizing (shared) */
+      --btn-h: 52px;
+      --btn-fs: 16px;
+      --btn-px: 18px;
+    }
 
-    --container:1120px; --gutter:24px;
-    --r-lg:20px;
-    --shadow-1:0 8px 24px rgba(16,18,34,.08), 0 2px 10px rgba(16,18,34,.05);
+    * {
+      box-sizing: border-box
+    }
 
-    /* button sizing (shared) */
-    --btn-h:52px; --btn-fs:16px; --btn-px:18px;
-  }
+    html,
+    body {
+      margin: 0;
+      color: var(--ink);
+      font-family: "Roboto Flex", system-ui, -apple-system, Segoe UI, Helvetica, Arial, sans-serif;
+    }
 
-  *{box-sizing:border-box}
-  html,body{margin:0;color:var(--ink);font-family:"Roboto Flex",system-ui,-apple-system,Segoe UI,Helvetica,Arial,sans-serif}
-  body{background:var(--bg);background-attachment:fixed}
-  a{color:inherit;text-decoration:none}
-  img{display:block;max-width:100%;height:auto}
+    body {
+      background: var(--bg);
+      background-attachment: fixed;
+      position: relative;
+      overflow-x: hidden;
+    }
 
-  .container{max-width:var(--container);margin-inline:auto;padding-inline:var(--gutter)}
-  .section{padding:64px 0}
+    /* Floating particles background */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      background: radial-gradient(circle at 20% 50%, rgba(216, 189, 255, .15) 0%, transparent 50%),
+        radial-gradient(circle at 80% 50%, rgba(194, 233, 251, .15) 0%, transparent 50%);
+      animation: mesh-move 20s ease-in-out infinite;
+      pointer-events: none;
+    }
 
-  /* Header (unified like other pages) */
-  .header{position:sticky;top:12px;z-index:10;padding:12px 0}
-  .nav{display:flex;align-items:center;justify-content:space-between;background:#fffffff2;border:1px solid var(--line);border-radius:999px;padding:10px 12px;box-shadow:var(--shadow-1)}
-  .brand{display:flex;align-items:center;gap:10px;font-weight:900}
-  .logo{width:26px;height:26px;border-radius:999px;background:linear-gradient(135deg,var(--brand-a),var(--brand-b))}
-  .menu{display:flex;gap:28px;align-items:center}
-  @media (max-width:900px){.menu{display:none}}
+    /* Floating particles */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      background-image: radial-gradient(circle at 10% 20%, rgba(216, 189, 255, 0.4) 0%, transparent 3%),
+        radial-gradient(circle at 90% 80%, rgba(194, 233, 251, 0.4) 0%, transparent 3%),
+        radial-gradient(circle at 30% 70%, rgba(216, 189, 255, 0.3) 0%, transparent 2%),
+        radial-gradient(circle at 70% 30%, rgba(194, 233, 251, 0.3) 0%, transparent 2%),
+        radial-gradient(circle at 50% 50%, rgba(216, 189, 255, 0.2) 0%, transparent 2%),
+        radial-gradient(circle at 15% 60%, rgba(194, 233, 251, 0.3) 0%, transparent 2%),
+        radial-gradient(circle at 85% 40%, rgba(216, 189, 255, 0.3) 0%, transparent 2%);
+      animation: float-particles 40s ease-in-out infinite;
+      pointer-events: none;
+      opacity: 0.6;
+    }
 
-  /* Right-side actions + mobile controls */
-  .nav-right{display:flex;align-items:center;gap:8px}
-  .hamburger{display:none;align-items:center;justify-content:center;width:44px;height:44px;border-radius:12px;border:1px solid var(--line);background:#fff;box-shadow:var(--shadow-1)}
-  .hamburger svg{width:22px;height:22px}
-  .btn-icon{display:inline-grid;place-items:center;width:44px;height:44px;border-radius:12px;border:1px solid var(--line);background:#fff;box-shadow:var(--shadow-1)}
-  .contact-icon{display:none}
-  @media (max-width:900px){
-    .nav-right > .btn{display:none}   /* hide big CTA on phones */
-    .hamburger{display:inline-grid}
-    .contact-icon{display:inline-grid}
-  }
+    @keyframes mesh-move {
 
-  /* Mobile sheet */
-  .mobile-nav[hidden]{display:none}
-  .mobile-nav{position:fixed;inset:0;z-index:50;backdrop-filter:blur(8px) saturate(1.1);background:rgba(15,18,33,.08)}
-  .mobile-panel{
-    position:absolute;top:0;right:0;height:100%;width:min(84vw,420px);
-    background:#ffffff;border-left:1px solid var(--line);
-    box-shadow:0 18px 48px rgba(16,18,34,.12), 0 8px 24px rgba(16,18,34,.08);
-    padding:16px;display:flex;flex-direction:column;gap:12px;
-    transform:translateX(10%);opacity:0;transition:transform .25s ease,opacity .25s ease
-  }
-  .mobile-nav.show .mobile-panel{transform:none;opacity:1}
-  .mobile-head{display:flex;align-items:center;justify-content:space-between}
-  .mobile-links{display:grid;gap:10px;margin-top:8px}
-  .mobile-links a{padding:12px 14px;border:1px solid var(--line);border-radius:14px;background:#fff;font-weight:800}
-  .no-scroll{overflow:hidden;touch-action:none}
+      0%,
+      100% {
+        transform: translate(0, 0) scale(1)
+      }
 
-  /* Buttons — unified size */
-  .btn{
-    display:inline-flex;align-items:center;gap:10px;
-    height:var(--btn-h); padding:0 var(--btn-px);
-    border-radius:999px; border:1px solid var(--line);
-    font-weight:800; font-size:var(--btn-fs); line-height:1;
-    box-shadow:var(--shadow-1); cursor:pointer;
-  }
-  .btn .ic{width:20px;height:20px;display:inline-block}
-  .btn.grad{background:linear-gradient(135deg,var(--brand-a),var(--brand-b));color:#0f1221}
-  .btn.black{background:#0f1221;color:#fff;border-color:#0f1221}
+      50% {
+        transform: translate(20px, -20px) scale(1.05)
+      }
+    }
 
-  /* Page title */
-  h1{margin:0 0 10px;font-size:clamp(34px,5.8vw,64px);line-height:1.05;letter-spacing:-.01em;font-weight:900}
-  p.lead{color:var(--ink-2);margin:0 0 18px;font-size:18px}
+    @keyframes float-particles {
 
-  /* Glass card */
-  .glass{
-    background:rgba(255,255,255,.46);
-    border:1px solid rgba(255,255,255,.38);
-    backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
-    border-radius:var(--r-lg);
-    padding:22px;
-    box-shadow:var(--shadow-1);
-  }
+      0%,
+      100% {
+        transform: translate(0, 0) rotate(0deg);
+        opacity: 0.6;
+      }
 
-  /* Form layout */
-  form{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-  .full{grid-column:1/-1}
-  label{display:block;font-weight:800;margin:4px 0 6px}
-  input, textarea, select{
-    width:100%; padding:12px 14px; border-radius:14px;
-    border:1px solid var(--line); background:#fff; font-size:16px; color:var(--ink)
-  }
-  textarea{min-height:120px; resize:vertical}
-  .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:2px}
-  .actions .btn{flex:0 0 auto}
+      33% {
+        transform: translate(30px, -30px) rotate(120deg);
+        opacity: 0.8;
+      }
 
-  /* Footer */
-  footer.site-footer{border-top:1px solid #ffffff; padding:48px 0 28px}
-  .site-footer .container{max-width:var(--container);margin-inline:auto;padding-inline:var(--gutter)}
-  .foot-grid{display:grid;grid-template-columns:2fr 1fr 1.2fr 1fr;gap:min(4vw,48px)}
-  .foot-col h4{margin:0 0 12px;font-size:18px;line-height:1.2;font-weight:900}
-  .foot-col a,.foot-col p{display:block;margin:6px 0;color:var(--ink-2)}
-  .foot-col a:hover{text-decoration:underline}
-  .foot-copy{margin-top:36px;text-align:center;font-size:13.5px;opacity:.75}
+      66% {
+        transform: translate(-20px, 20px) rotate(240deg);
+        opacity: 0.5;
+      }
+    }
 
-  /* Responsive */
-  @media (max-width:900px){
-    form{grid-template-columns:1fr}
-    .foot-grid{grid-template-columns:1fr 1fr}
-  }
-  @media (max-width:560px){
-    .foot-grid{grid-template-columns:1fr}
-  }
+    a {
+      color: inherit;
+      text-decoration: none
+    }
 
-  /* — Fix contact icon stretching/overlap on iOS — */
-.nav-right .contact-icon{
-  /* lock the box */
-  display:inline-grid;
-  place-items:center;
-  width:44px; height:44px;
-  flex:0 0 44px;
-  padding:0;
-  border-radius:12px;
-  border:1px solid var(--line);
-  background:#fff !important;      /* prevent the black pill look */
-  box-shadow:var(--shadow-1);
-  overflow:hidden;                  /* clip any svg overflow */
-  contain: layout paint;            /* isolate paints */
-}
+    .ic {
+      width: 24px;
+      height: 24px;
+      vertical-align: -4px
+    }
 
-.nav-right .contact-icon .ic{
-  width:22px; height:22px;
-  display:block;                    /* avoid inline-svg baseline weirdness */
-}
+    img,
+    video {
+      display: block;
+      max-width: 100%;
+      height: auto
+    }
 
-/* keep hamburger consistent next to it */
-.nav-right .hamburger{
-  flex:0 0 44px;
-}
+    .container {
+      max-width: var(--container);
+      margin-inline: auto;
+      padding-inline: var(--gutter);
+      position: relative;
+      z-index: 1
+    }
 
-/* optional: make both ultra-smooth while the sheet animates */
-@media (max-width:900px){
-  .nav-right .contact-icon,
-  .nav-right .hamburger{
-    transform:translateZ(0);
-    backface-visibility:hidden;
-  }
-}
+    .wrap {
+      max-width: var(--wrap);
+      margin-inline: auto;
+      position: relative;
+      z-index: 1
+    }
 
-</style>
+    .section {
+      padding: var(--s-6) 0
+    }
+
+    /* Premium Header */
+    .header {
+      position: sticky;
+      top: calc(12px + env(safe-area-inset-top, 0px));
+      z-index: 10;
+      padding: 12px 0
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(255, 255, 255, .90);
+      border: 1px solid rgba(255, 255, 255, .6);
+      border-radius: 999px;
+      padding: 11px 14px;
+      box-shadow: 0 4px 24px rgba(16, 18, 34, .06), inset 0 1px 0 rgba(255, 255, 255, .8);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 900
+    }
+
+    .logo {
+      width: 28px;
+      height: 28px;
+      border-radius: 999px;
+      background: var(--brand-gradient);
+      box-shadow: 0 2px 8px rgba(216, 189, 255, .3), inset 0 1px 0 rgba(255, 255, 255, .4);
+      flex: none;
+    }
+
+    .menu {
+      display: flex;
+      gap: 28px;
+      align-items: center
+    }
+
+    @media (max-width: 900px) {
+      .menu {
+        display: none
+      }
+    }
+
+    /* Premium Buttons */
+    .btn {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 13px 20px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: var(--brand-gradient);
+      color: var(--ink);
+      font-weight: 800;
+      box-shadow: var(--shadow-1);
+      font-size: 16px;
+      line-height: 1;
+      transition: transform .2s var(--ease-smooth), box-shadow .3s var(--ease-smooth);
+      overflow: hidden;
+    }
+
+    .btn::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255, 255, 255, .25), transparent);
+      opacity: 0;
+      transition: opacity .3s var(--ease-smooth);
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 42px rgba(16, 18, 34, .20), var(--shadow-glow);
+    }
+
+    .btn:hover::before {
+      opacity: 1
+    }
+
+    .btn .ic {
+      width: 22px;
+      height: 22px;
+    }
+
+    .btn.black {
+      background: #0f1221;
+      color: #fff;
+      border-color: #0f1221;
+    }
+
+    /* Mobile Nav (Standardized) */
+    .mobile-nav[hidden] {
+      display: none
+    }
+
+    .mobile-nav {
+      position: fixed;
+      inset: 0;
+      z-index: 50;
+      backdrop-filter: blur(10px) saturate(1.1);
+      background: rgba(15, 18, 33, .10);
+    }
+
+    .mobile-panel {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+      width: min(84vw, 420px);
+      background: #ffffff;
+      border-left: 1px solid var(--line);
+      box-shadow: var(--shadow-2);
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      transform: translateX(12%);
+      opacity: 0;
+      transition: transform .28s var(--ease-smooth), opacity .28s var(--ease-smooth);
+    }
+
+    .mobile-nav.show .mobile-panel {
+      transform: none;
+      opacity: 1
+    }
+
+    .mobile-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between
+    }
+
+    .mobile-links {
+      display: grid;
+      gap: 11px;
+      margin-top: 10px
+    }
+
+    .mobile-links a {
+      padding: 13px 16px;
+      border: 1px solid var(--line);
+      border-radius: 15px;
+      background: #fff;
+      font-weight: 800;
+      transition: all .2s var(--ease-smooth);
+    }
+
+    .mobile-links a:hover {
+      transform: translateX(-3px);
+      border-color: var(--brand-a)
+    }
+
+    .no-scroll {
+      overflow: hidden;
+      touch-action: none
+    }
+
+    /* Hamburger & Contact Icons */
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 8px
+    }
+
+    .hamburger {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      border-radius: var(--r-md);
+      border: 1px solid var(--line);
+      background: #fff;
+      box-shadow: var(--shadow-1);
+      transition: transform .2s var(--ease-smooth);
+    }
+
+    .hamburger:hover {
+      transform: scale(1.05)
+    }
+
+    .hamburger svg {
+      width: 22px;
+      height: 22px
+    }
+
+    .btn-icon {
+      display: inline-grid;
+      place-items: center;
+      width: 44px;
+      height: 44px;
+      border-radius: var(--r-md);
+      border: 1px solid var(--line);
+      background: #fff;
+      box-shadow: var(--shadow-1);
+      transition: transform .2s var(--ease-smooth);
+    }
+
+    .btn-icon:hover {
+      transform: translateY(-2px)
+    }
+
+    .contact-icon {
+      display: none
+    }
+
+    @media (max-width: 900px) {
+      .nav-right>.btn {
+        display: none
+      }
+
+      .hamburger {
+        display: inline-grid
+      }
+
+      .contact-icon {
+        display: inline-grid
+      }
+    }
+
+    /* Page */
+    h1 {
+      margin: 0 0 10px;
+      font-size: clamp(34px, 5.8vw, 64px);
+      line-height: 1.05;
+      letter-spacing: -.01em;
+      font-weight: 900
+    }
+
+    p.lead {
+      color: var(--ink-2);
+      margin: 0 0 18px;
+      font-size: 18px
+    }
+
+    /* Modern Glass Cards */
+    .glass {
+      position: relative;
+      background: linear-gradient(135deg, rgba(255, 255, 255, .58) 0%, rgba(255, 255, 255, .42) 100%);
+      border-radius: var(--r-lg);
+      padding: 24px;
+      box-shadow: var(--shadow-1);
+      transition: transform .3s var(--ease-smooth), box-shadow .3s var(--ease-smooth);
+    }
+
+    .glass::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: var(--r-lg);
+      padding: 2px;
+      background: linear-gradient(135deg, var(--brand-a), var(--brand-b), var(--brand-a));
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      mask-composite: exclude;
+      opacity: 0;
+      transition: opacity .3s var(--ease-smooth);
+    }
+
+    .glass:hover::before {
+      opacity: 1
+    }
+
+    .glass:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 48px rgba(16, 18, 34, .14), 0 4px 20px rgba(216, 189, 255, .2);
+    }
+
+    /* Form layout */
+    form {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px
+    }
+
+    .full {
+      grid-column: 1/-1
+    }
+
+    label {
+      display: block;
+      font-weight: 800;
+      margin: 4px 0 6px
+    }
+
+    input,
+    textarea,
+    select {
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background: #fff;
+      font-size: 16px;
+      color: var(--ink)
+    }
+
+    textarea {
+      min-height: 120px;
+      resize: vertical
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 2px
+    }
+
+    .actions .btn {
+      flex: 0 0 auto
+    }
+
+    /* Enhanced Footer */
+    footer.site-footer {
+      border-top: 2px solid transparent;
+      border-image: linear-gradient(90deg, var(--brand-a) 0%, var(--brand-b) 50%, var(--brand-a) 100%) 1;
+      padding: 48px 0 36px;
+    }
+
+    .site-footer .container {
+      max-width: var(--container);
+      margin-inline: auto;
+      padding-inline: var(--gutter);
+    }
+
+    .foot-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px 32px;
+      align-items: start;
+    }
+
+    .foot-col h4 {
+      margin: 0 0 14px;
+      font-size: 18px;
+      font-weight: 900;
+      line-height: 1.2;
+    }
+
+    .foot-col a,
+    .foot-col p {
+      display: block;
+      margin: 7px 0;
+      color: var(--ink-2);
+      text-decoration: none;
+      line-height: 1.6;
+      transition: color .2s var(--ease-smooth);
+    }
+
+    .foot-col a:hover {
+      color: var(--ink);
+      text-decoration: underline;
+    }
+
+    .foot-copy {
+      margin-top: 28px;
+      text-align: center;
+      font-size: 13.5px;
+      opacity: .75;
+    }
+
+    @media (max-width: 900px) {
+      .foot-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      form {
+        grid-template-columns: 1fr
+      }
+    }
+
+    @media (max-width: 560px) {
+      .foot-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .foot-copy {
+        margin-top: 22px;
+      }
+    }
+  </style>
 </head>
+
 <body>
 
-<!-- ICONS -->
-<svg aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden">
-  <symbol id="mail" viewBox="0 0 24 24"><path fill="currentColor" d="M4 6h16a2 2 0 0 1 2 2v.2l-10 6.25L2 8.2V8a2 2 0 0 1 2-2Zm16 12H4a2 2 0 0 1-2-2V9.3l9.2 5.75a2 2 0 0 0 2.1 0L22 9.3V16a2 2 0 0 1-2 2Z"/></symbol>
-  <symbol id="ext" viewBox="0 0 24 24"><path fill="currentColor" d="M14 3h7v7h-2V6.41l-9.3 9.3l-1.4-1.42l9.3-9.3H14V3ZM5 5h5v2H7v10h10v-3h2v5H5V5Z"/></symbol>
-</svg>
+  <!-- ICONS -->
+  <svg aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden">
+    <symbol id="mail" viewBox="0 0 24 24">
+      <path fill="currentColor"
+        d="M4 6h16a2 2 0 0 1 2 2v.2l-10 6.25L2 8.2V8a2 2 0 0 1 2-2Zm16 12H4a2 2 0 0 1-2-2V9.3l9.2 5.75a2 2 0 0 0 2.1 0L22 9.3V16a2 2 0 0 1-2 2Z" />
+    </symbol>
+    <symbol id="ext" viewBox="0 0 24 24">
+      <path fill="currentColor" d="M14 3h7v7h-2V6.41l-9.3 9.3l-1.4-1.42l9.3-9.3H14V3ZM5 5h5v2H7v10h10v-3h2v5H5V5Z" />
+    </symbol>
+  </svg>
 
-<!-- Header (with mobile sheet) -->
-<header class="header">
-  <div class="container">
-    <div class="nav">
-      <div class="brand"><span class="logo"></span> Fluencai</div>
+  <!-- Header (with mobile sheet) -->
+  <header class="header">
+    <div class="container">
+      <div class="nav">
+        <div class="brand"><span class="logo"></span> Fluencai</div>
 
-      <nav class="menu" aria-label="Primary">
-        <a href="/">Home</a>
-        <a href="index.html#features">AI Branding</a>
-        <a href="/app">Try-On App</a>
-        <a href="/voice">Voice App</a>
-        <a href="/app-builder">App Builder</a>
-      </nav>
+        <nav class="menu" aria-label="Primary">
+          <a href="index.html">Home</a>
+          <a href="index.html#features">AI Branding</a>
+          <a href="app.html">Try-On App</a>
+          <a href="voice.html">Voice App</a>
+          <a href="app-builder.html">Web App Builder</a>
+        </nav>
 
-      <div class="nav-right">
-        <a class="btn grad" href="mailto:contact@fluencai.com?subject=Account%20Deletion%20Request">
-          <svg class="ic"><use href="#mail"/></svg> Contact
-        </a>
-        <a class="btn-icon contact-icon" href="mailto:contact@fluencai.com?subject=Account%20Deletion%20Request" aria-label="Email us">
-          <svg class="ic"><use href="#mail"/></svg>
-        </a>
-        <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobileNav">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M3 6h18M3 12h18M3 18h18"/>
-          </svg>
-        </button>
-      </div>
-    </div>
-
-    <!-- Mobile sheet -->
-    <div class="mobile-nav" id="mobileNav" role="dialog" aria-modal="true" aria-labelledby="mobileTitle" hidden>
-      <div class="mobile-panel">
-        <div class="mobile-head">
-          <div class="brand" id="mobileTitle"><span class="logo"></span> Fluencai</div>
-          <button class="hamburger" id="closeMobile" aria-label="Close menu">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M6 6l12 12M18 6L6 18"/>
+        <div class="nav-right">
+          <a class="btn" href="mailto:contact@fluencai.com?subject=Account%20Deletion%20Request">
+            <svg class="ic">
+              <use href="#mail" />
+            </svg> Contact
+          </a>
+          <a class="btn-icon contact-icon" href="mailto:contact@fluencai.com?subject=Account%20Deletion%20Request"
+            aria-label="Email us">
+            <svg class="ic">
+              <use href="#mail" />
+            </svg>
+          </a>
+          <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false"
+            aria-controls="mobileNav">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round">
+              <path d="M3 6h18M3 12h18M3 18h18" />
             </svg>
           </button>
         </div>
-        <nav class="mobile-links" aria-label="Mobile">
-          <a href="/">Home</a>
-          <a href="index.html#features">AI Branding</a>
-          <a href="/app">Try-On App</a>
-          <a href="/voice">Voice App</a>
-          <a href="/app-builder">App Builder</a>
-        </nav>
+      </div>
+
+      <!-- Mobile sheet -->
+      <div class="mobile-nav" id="mobileNav" role="dialog" aria-modal="true" aria-labelledby="mobileTitle" hidden>
+        <div class="mobile-panel">
+          <div class="mobile-head">
+            <div class="brand" id="mobileTitle"><span class="logo"></span> Fluencai</div>
+            <button class="hamburger" id="closeMobile" aria-label="Close menu">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <path d="M6 6l12 12M18 6L6 18" />
+              </svg>
+            </button>
+          </div>
+          <nav class="mobile-links" aria-label="Mobile">
+            <a href="index.html">Home</a>
+            <a href="index.html#features">AI Branding</a>
+            <a href="app.html">Try-On App</a>
+            <a href="voice.html">Voice App</a>
+            <a href="app-builder.html">Web App Builder</a>
+            <a href="mailto:contact@fluencai.com?subject=Account%20Deletion%20Request">Contact Us</a>
+          </nav>
+        </div>
       </div>
     </div>
-  </div>
-</header>
+  </header>
 
-<!-- CONTENT -->
-<section class="section">
-  <div class="container">
-    <div class="glass">
-      <h1>Request Account Deletion</h1>
-      <p class="lead">We’re sorry to see you go. Fill this form and we’ll process your request.</p>
+  <!-- CONTENT -->
+  <section class="section">
+    <div class="container">
+      <div class="glass">
+        <h1>Request Account Deletion</h1>
+        <p class="lead">We’re sorry to see you go. Fill this form and we’ll process your request.</p>
 
-      <!-- Sends to contact@fluencai.com via FormSubmit -->
-      <form action="https://formsubmit.co/contact@fluencai.com" method="POST">
-        <!-- FormSubmit options -->
-        <input type="hidden" name="_subject" value="Fluencai — Account Deletion Request">
-        <input type="hidden" name="_template" value="table">
-        <input type="hidden" name="_captcha" value="true">
-        <input type="hidden" name="_next" value="https://www.fluencai.com/index.html?deleted=1">
-        <!-- Honeypot -->
-        <input type="text" name="_honey" style="display:none">
+        <!-- Sends to contact@fluencai.com via FormSubmit -->
+        <form action="https://formsubmit.co/contact@fluencai.com" method="POST">
+          <!-- FormSubmit options -->
+          <input type="hidden" name="_subject" value="Fluencai — Account Deletion Request">
+          <input type="hidden" name="_template" value="table">
+          <input type="hidden" name="_captcha" value="true">
+          <input type="hidden" name="_next" value="https://www.fluencai.com/index.html?deleted=1">
+          <!-- Honeypot -->
+          <input type="text" name="_honey" style="display:none">
 
-        <div>
-          <label for="first">First name</label>
-          <input id="first" name="first_name" placeholder="First name" required>
-        </div>
+          <div>
+            <label for="first">First name</label>
+            <input id="first" name="first_name" placeholder="First name" required>
+          </div>
 
-        <div>
-          <label for="last">Last name</label>
-          <input id="last" name="last_name" placeholder="Last name" required>
-        </div>
+          <div>
+            <label for="last">Last name</label>
+            <input id="last" name="last_name" placeholder="Last name" required>
+          </div>
 
-        <div class="full">
-          <label for="email">Email</label>
-          <input id="email" name="email" type="email" placeholder="you@company.com" required>
-        </div>
+          <div class="full">
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" placeholder="you@company.com" required>
+          </div>
 
-        <div class="full">
-          <label for="reason">Reasons</label>
-          <textarea id="reason" name="reason" placeholder="Tell us briefly why you’re deleting your account (optional)"></textarea>
-        </div>
+          <div class="full">
+            <label for="reason">Reasons</label>
+            <textarea id="reason" name="reason"
+              placeholder="Tell us briefly why you’re deleting your account (optional)"></textarea>
+          </div>
 
-        <div class="full actions">
-          <button class="btn grad" type="submit">
-            <svg class="ic"><use href="#ext"/></svg> Submit
-          </button>
-          <a class="btn black" href="mailto:contact@fluencai.com?subject=Account%20Deletion%20Request">
-            <svg class="ic"><use href="#mail"/></svg> Email us instead
+          <div class="full actions">
+            <button class="btn" type="submit">
+              <svg class="ic">
+                <use href="#ext" />
+              </svg> Submit
+            </button>
+            <a class="btn black" href="mailto:contact@fluencai.com?subject=Account%20Deletion%20Request">
+              <svg class="ic">
+                <use href="#mail" />
+              </svg> Email us instead
+            </a>
+          </div>
+
+          <p class="full" style="margin-top:6px;color:var(--ink-2);font-size:14px">
+            By submitting, you confirm you own this email and request deletion per our
+            <a href="privacy.html" target="_blank" rel="noopener">Privacy Policy</a>.
+          </p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="foot-grid">
+        <div class="foot-col">
+          <h4>Menu</h4>
+          <a href="index.html" style="display: flex; align-items: center; gap: 8px;">
+            <svg class="ic" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+              <polyline points="9 22 9 12 15 12 15 22"></polyline>
+            </svg>
+            Home
+          </a>
+          <a href="index.html#features" style="display: flex; align-items: center; gap: 8px;">
+            <svg class="ic" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z">
+              </path>
+            </svg>
+            AI Branding
+          </a>
+          <a href="app.html" style="display: flex; align-items: center; gap: 8px;">
+            <svg class="ic" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect>
+              <line x1="12" y1="18" x2="12.01" y2="18"></line>
+            </svg>
+            Try-On App
+          </a>
+          <a href="voice.html" style="display: flex; align-items: center; gap: 8px;">
+            <svg class="ic" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
+              <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+              <line x1="12" y1="19" x2="12" y2="23"></line>
+              <line x1="8" y1="23" x2="16" y2="23"></line>
+            </svg>
+            Voice App
+          </a>
+          <a href="app-builder.html" style="display: flex; align-items: center; gap: 8px;">
+            <svg class="ic" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+              <line x1="9" y1="3" x2="9" y2="21"></line>
+            </svg>
+            Web App Builder
           </a>
         </div>
-
-        <p class="full" style="margin-top:6px;color:var(--ink-2);font-size:14px">
-          By submitting, you confirm you own this email and request deletion per our
-          <a href="/privacy" target="_blank" rel="noopener">Privacy Policy</a>.
-        </p>
-      </form>
+        <div class="foot-col">
+          <h4>Policy</h4>
+          <a href="privacy.html" style="display: flex; align-items: center; gap: 8px;">
+            <svg class="ic" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+            </svg>
+            Privacy Policy
+          </a>
+          <a href="terms.html" style="display: flex; align-items: center; gap: 8px;">
+            <svg class="ic" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+              <line x1="16" y1="13" x2="8" y2="13"></line>
+              <line x1="16" y1="17" x2="8" y2="17"></line>
+              <polyline points="10 9 9 9 8 9"></polyline>
+            </svg>
+            Terms & Conditions
+          </a>
+        </div>
+        <div class="foot-col">
+          <h4>Contact</h4>
+          <a href="mailto:contact@fluencai.com" style="display: flex; align-items: center; gap: 8px;">
+            <svg class="ic" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+              <polyline points="22,6 12,13 2,6"></polyline>
+            </svg>
+            contact@fluencai.com
+          </a>
+          <a href="tel:+33699052406" style="display: flex; align-items: center; gap: 8px;">
+            <svg class="ic" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path
+                d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.05 12.05 0 0 0 .57 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.03 12.03 0 0 0 2.81.57A2 2 0 0 1 22 16.92z">
+              </path>
+            </svg>
+            +33 6 99 05 24 06
+          </a>
+          <p style="display: flex; align-items: center; gap: 8px; margin: 7px 0;">
+            <svg class="ic" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+              <circle cx="12" cy="10" r="3"></circle>
+            </svg>
+            Paris, France
+          </p>
+          <p style="display: flex; align-items: center; gap: 8px; margin: 7px 0;">
+            <svg class="ic" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+              <circle cx="12" cy="10" r="3"></circle>
+            </svg>
+            Dubai, United Arab Emirates
+          </p>
+          <p style="display: flex; align-items: center; gap: 8px; margin: 7px 0;">
+            <svg class="ic" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+              <circle cx="12" cy="10" r="3"></circle>
+            </svg>
+            Casablanca, Morocco
+          </p>
+        </div>
+        <div class="foot-col">
+          <h4>Social</h4>
+          <a href="https://www.instagram.com/fluencai/#" target="_blank" rel="noopener"
+            style="display: flex; align-items: center; gap: 8px;">
+            <svg class="ic" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+              <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+              <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+            </svg>
+            Instagram
+          </a>
+          <a href="https://www.linkedin.com/company/fluencai" target="_blank" rel="noopener"
+            style="display: flex; align-items: center; gap: 8px;">
+            <svg class="ic" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+              <rect x="2" y="9" width="4" height="12"></rect>
+              <circle cx="4" cy="4" r="2"></circle>
+            </svg>
+            LinkedIn
+          </a>
+          <a href="https://www.facebook.com/fluencai" target="_blank" rel="noopener"
+            style="display: flex; align-items: center; gap: 8px;">
+            <svg class="ic" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+            </svg>
+            Facebook
+          </a>
+        </div>
+      </div>
+      <div class="foot-copy">© 2024 Fluencai</div>
     </div>
-  </div>
-</section>
+  </footer>
 
-<!-- FOOTER -->
-<footer class="site-footer">
-  <div class="container">
-    <div class="foot-grid">
-      <div class="foot-col">
-        <h4>Menu</h4>
-        <a href="/">Home</a>
-        <a href="index.html#features">AI Branding</a>
-        <a href="/app">Try-On App</a>
-        <a href="/voice">Voice App</a>
-        <a href="/app-builder">App Builder</a>
-      </div>
+  <script>
+    // Mobile menu (right-side sheet) — minimal + focus trap
+    (function () {
+      const html = document.documentElement;
+      const burger = document.getElementById('hamburger');
+      const panel = document.getElementById('mobileNav');
+      const closeBtn = document.getElementById('closeMobile');
+      const FOCUSABLE = 'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])';
+      let lastFocused = null;
 
-      <div class="foot-col">
-        <h4>Policy</h4>
-        <a href="/privacy">Privacy Policy</a>
-        <a href="/terms">Terms &amp; Conditions</a>
-      </div>
-
-      <div class="foot-col">
-        <h4>Contact</h4>
-        <a href="mailto:contact@fluencai.com">contact@fluencai.com</a>
-        <a href="tel:+33699052406">+33&nbsp;6&nbsp;99&nbsp;05&nbsp;24&nbsp;06</a>
-        <p>Paris, France</p>
-        <p>Dubai, United Arab Emirates</p>
-        <p>Casablanca, Morocco</p>
-      </div>
-
-      <div class="foot-col">
-        <h4>Social</h4>
-        <a href="https://www.instagram.com/fluencai/#" target="_blank" rel="noopener">Instagram</a>
-        <a href="https://www.linkedin.com/company/fluencai" target="_blank" rel="noopener">LinkedIn</a>
-        <a href="https://www.facebook.com/fluencai" target="_blank" rel="noopener">Facebook</a>
-      </div>
-    </div>
-    <div class="foot-copy">© 2024 Fluencai</div>
-  </div>
-</footer>
-
-<script>
-  // Mobile menu (right-side sheet) — minimal + focus trap
-  (function(){
-    const html=document.documentElement;
-    const burger=document.getElementById('hamburger');
-    const panel=document.getElementById('mobileNav');
-    const closeBtn=document.getElementById('closeMobile');
-    const FOCUSABLE='a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])';
-    let lastFocused=null;
-
-    function getFocusables(){
-      return Array.from(panel.querySelectorAll(FOCUSABLE))
-        .filter(el => el.offsetParent !== null || panel === el);
-    }
-    function open(){
-      lastFocused=document.activeElement;
-      panel.hidden=false;
-      requestAnimationFrame(()=>{
-        panel.classList.add('show');
-        burger.setAttribute('aria-expanded','true');
-        html.classList.add('no-scroll');
-        const f=getFocusables()[0]; if(f) f.focus();
+      function getFocusables() {
+        return Array.from(panel.querySelectorAll(FOCUSABLE))
+          .filter(el => el.offsetParent !== null || panel === el);
+      }
+      function open() {
+        lastFocused = document.activeElement;
+        panel.hidden = false;
+        requestAnimationFrame(() => {
+          panel.classList.add('show');
+          burger.setAttribute('aria-expanded', 'true');
+          html.classList.add('no-scroll');
+          const f = getFocusables()[0]; if (f) f.focus();
+        });
+      }
+      function shut() {
+        panel.classList.remove('show');
+        burger.setAttribute('aria-expanded', 'false');
+        html.classList.remove('no-scroll');
+        setTimeout(() => { panel.hidden = true; if (lastFocused) lastFocused.focus(); }, 200);
+      }
+      function trap(e) {
+        if (panel.hidden || e.key !== 'Tab') return;
+        const nodes = getFocusables(); if (!nodes.length) return;
+        const first = nodes[0], last = nodes[nodes.length - 1];
+        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+      }
+      burger?.addEventListener('click', open);
+      closeBtn?.addEventListener('click', shut);
+      panel?.addEventListener('click', e => { if (e.target === panel) shut(); });
+      document.addEventListener('keydown', e => { if (e.key === 'Escape' && !panel.hidden) shut(); });
+      document.addEventListener('keydown', trap);
+      panel?.addEventListener('click', e => {
+        const t = e.target;
+        if (t.tagName === 'A' && t.getAttribute('href')) shut();
       });
-    }
-    function shut(){
-      panel.classList.remove('show');
-      burger.setAttribute('aria-expanded','false');
-      html.classList.remove('no-scroll');
-      setTimeout(()=>{ panel.hidden=true; if(lastFocused) lastFocused.focus(); },200);
-    }
-    function trap(e){
-      if(panel.hidden || e.key!=='Tab') return;
-      const nodes=getFocusables(); if(!nodes.length) return;
-      const first=nodes[0], last=nodes[nodes.length-1];
-      if(e.shiftKey && document.activeElement===first){ e.preventDefault(); last.focus(); }
-      else if(!e.shiftKey && document.activeElement===last){ e.preventDefault(); first.focus(); }
-    }
-    burger?.addEventListener('click', open);
-    closeBtn?.addEventListener('click', shut);
-    panel?.addEventListener('click', e => { if(e.target===panel) shut(); });
-    document.addEventListener('keydown', e => { if(e.key==='Escape' && !panel.hidden) shut(); });
-    document.addEventListener('keydown', trap);
-    panel?.addEventListener('click', e => {
-      const t=e.target;
-      if(t.tagName==='A' && t.getAttribute('href')) shut();
-    });
-  })();
-</script>
+    })();
+  </script>
 
 </body>
+
 </html>
