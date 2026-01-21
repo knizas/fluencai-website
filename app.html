@@ -490,43 +490,35 @@
       border: 2px solid rgba(255, 255, 255, .7);
       display: grid;
       place-items: center;
-      background: var(--brand-gradient);
-      box-shadow: 0 6px 20px rgba(216, 189, 255, .35), inset 0 1px 0 rgba(255, 255, 255, .5);
+      background: var(--surface);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, .06), inset 0 1px 0 rgba(255, 255, 255, .5);
       transition: transform .3s var(--ease-bounce), box-shadow .3s var(--ease-smooth);
       overflow: hidden;
     }
 
     .svc .icon::before {
-      content: '';
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: linear-gradient(45deg, transparent, rgba(255, 255, 255, .6), transparent);
-      transform: translateX(-100%);
-      transition: transform .6s var(--ease-smooth);
+      display: none;
     }
 
     .svc:hover .icon::before {
-      transform: translateX(100%);
+      display: none;
     }
 
     .svc .icon:hover {
       transform: translateY(-4px) scale(1.08) rotate(2deg);
-      box-shadow: 0 12px 32px rgba(216, 189, 255, .5), 0 4px 16px rgba(194, 233, 251, .3);
-      animation: pulse-glow 1.5s ease-in-out infinite;
+      box-shadow: 0 12px 32px rgba(0, 0, 0, .08), 0 4px 16px rgba(0, 0, 0, .05);
+      animation: none;
     }
 
     @keyframes pulse-glow {
 
       0%,
       100% {
-        box-shadow: 0 12px 32px rgba(216, 189, 255, .5), 0 4px 16px rgba(194, 233, 251, .3);
+        box-shadow: 0 12px 32px rgba(0, 0, 0, .08);
       }
 
       50% {
-        box-shadow: 0 12px 40px rgba(216, 189, 255, .7), 0 4px 20px rgba(194, 233, 251, .5);
+        box-shadow: 0 12px 40px rgba(0, 0, 0, .12);
       }
     }
 
@@ -890,15 +882,16 @@
           <div class="reveal" style="text-align:center">
             <div style="position:relative;display:inline-block;margin-bottom:24px">
               <div
-                style="width:clamp(88px,12vw,120px);height:clamp(88px,12vw,120px);margin:0 auto;border-radius:50%;background:var(--brand-gradient);display:grid;place-items:center;box-shadow:0 12px 32px rgba(216,189,255,.35),0 4px 16px rgba(194,233,251,.25)">
-                <svg class="ic" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                style="width:clamp(88px,12vw,120px);height:clamp(88px,12vw,120px);margin:0 auto;border-radius:50%;background:var(--surface);display:grid;place-items:center;box-shadow:var(--shadow-2);border:1px solid var(--line)">
+                <svg class="ic" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                  stroke-width="2" style="color:var(--ink)">
                   <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
                   <polyline points="17 8 12 3 7 8"></polyline>
                   <line x1="12" y1="3" x2="12" y2="15"></line>
                 </svg>
               </div>
               <div
-                style="position:absolute;top:8px;right:-12px;width:36px;height:36px;border-radius:50%;background:#fff;border:3px solid var(--brand-a);display:grid;place-items:center;font-weight:900;color:var(--ink);box-shadow:0 4px 12px rgba(0,0,0,.08)">
+                style="position:absolute;top:8px;right:-12px;width:36px;height:36px;border-radius:50%;background:#fff;border:1px solid var(--line-dark);display:grid;place-items:center;font-weight:900;color:var(--ink);box-shadow:var(--shadow-1)">
                 1</div>
             </div>
             <h3 style="margin-bottom:10px;font-size:clamp(18px,2.5vw,22px)">Upload your photo</h3>
@@ -910,13 +903,14 @@
           <div class="reveal delay-1" style="text-align:center">
             <div style="position:relative;display:inline-block;margin-bottom:24px">
               <div
-                style="width:clamp(88px,12vw,120px);height:clamp(88px,12vw,120px);margin:0 auto;border-radius:50%;background:var(--brand-gradient);display:grid;place-items:center;box-shadow:0 12px 32px rgba(216,189,255,.35),0 4px 16px rgba(194,233,251,.25)">
-                <svg class="ic" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                style="width:clamp(88px,12vw,120px);height:clamp(88px,12vw,120px);margin:0 auto;border-radius:50%;background:var(--surface);display:grid;place-items:center;box-shadow:var(--shadow-2);border:1px solid var(--line)">
+                <svg class="ic" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                  stroke-width="2" style="color:var(--ink)">
                   <path d="M12 2l2.2 5.6L20 10l-5.6 2.4L12 18l-2.4-5.6L4 10l5.6-2.4L12 2Z" />
                 </svg>
               </div>
               <div
-                style="position:absolute;top:8px;right:-12px;width:36px;height:36px;border-radius:50%;background:#fff;border:3px solid var(--brand-a);display:grid;place-items:center;font-weight:900;color:var(--ink);box-shadow:0 4px 12px rgba(0,0,0,.08)">
+                style="position:absolute;top:8px;right:-12px;width:36px;height:36px;border-radius:50%;background:#fff;border:1px solid var(--line-dark);display:grid;place-items:center;font-weight:900;color:var(--ink);box-shadow:var(--shadow-1)">
                 2</div>
             </div>
             <h3 style="margin-bottom:10px;font-size:clamp(18px,2.5vw,22px)">Describe any style</h3>
@@ -928,15 +922,16 @@
           <div class="reveal delay-2" style="text-align:center">
             <div style="position:relative;display:inline-block;margin-bottom:24px">
               <div
-                style="width:clamp(88px,12vw,120px);height:clamp(88px,12vw,120px);margin:0 auto;border-radius:50%;background:var(--brand-gradient);display:grid;place-items:center;box-shadow:0 12px 32px rgba(216,189,255,.35),0 4px 16px rgba(194,233,251,.25)">
-                <svg class="ic" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                style="width:clamp(88px,12vw,120px);height:clamp(88px,12vw,120px);margin:0 auto;border-radius:50%;background:var(--surface);display:grid;place-items:center;box-shadow:var(--shadow-2);border:1px solid var(--line)">
+                <svg class="ic" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                  stroke-width="2" style="color:var(--ink)">
                   <polyline points="8 17 12 21 16 17"></polyline>
                   <line x1="12" y1="12" x2="12" y2="21"></line>
                   <path d="M20.88 18.09A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.29"></path>
                 </svg>
               </div>
               <div
-                style="position:absolute;top:8px;right:-12px;width:36px;height:36px;border-radius:50%;background:#fff;border:3px solid var(--brand-a);display:grid;place-items:center;font-weight:900;color:var(--ink);box-shadow:0 4px 12px rgba(0,0,0,.08)">
+                style="position:absolute;top:8px;right:-12px;width:36px;height:36px;border-radius:50%;background:#fff;border:1px solid var(--line-dark);display:grid;place-items:center;font-weight:900;color:var(--ink);box-shadow:var(--shadow-1)">
                 3</div>
             </div>
             <h3 style="margin-bottom:10px;font-size:clamp(18px,2.5vw,22px)">Get instant results</h3>
@@ -1019,8 +1014,9 @@
         <!-- Stat 1 -->
         <div class="glass reveal" style="text-align:center;padding:clamp(28px,4vw,36px) 20px">
           <div
-            style="width:64px;height:64px;margin:0 auto 18px;border-radius:50%;background:linear-gradient(135deg,#d8bdff,#e8d4ff);display:grid;place-items:center;box-shadow:0 8px 24px rgba(216,189,255,.3)">
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+            style="width:64px;height:64px;margin:0 auto 18px;border-radius:50%;background:var(--surface);display:grid;place-items:center;box-shadow:var(--shadow-2);border:1px solid var(--line)">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              style="color:var(--ink)">
               <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
               <circle cx="9" cy="7" r="4"></circle>
               <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
@@ -1035,8 +1031,9 @@
         <!-- Stat 2 -->
         <div class="glass reveal delay-1" style="text-align:center;padding:clamp(28px,4vw,36px) 20px">
           <div
-            style="width:64px;height:64px;margin:0 auto 18px;border-radius:50%;background:linear-gradient(135deg,#c2e9fb,#d4f1fc);display:grid;place-items:center;box-shadow:0 8px 24px rgba(194,233,251,.3)">
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+            style="width:64px;height:64px;margin:0 auto 18px;border-radius:50%;background:var(--surface);display:grid;place-items:center;box-shadow:var(--shadow-2);border:1px solid var(--line)">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              style="color:var(--ink)">
               <path d="M12 2l2.2 5.6L20 10l-5.6 2.4L12 18l-2.4-5.6L4 10l5.6-2.4L12 2Z" />
               <circle cx="12" cy="12" r="10" stroke-opacity="0.3" />
             </svg>
@@ -1049,8 +1046,8 @@
         <!-- Stat 3 -->
         <div class="glass reveal delay-2" style="text-align:center;padding:clamp(28px,4vw,36px) 20px">
           <div
-            style="width:64px;height:64px;margin:0 auto 18px;border-radius:50%;background:linear-gradient(135deg,#ffbd2e,#ffd978);display:grid;place-items:center;box-shadow:0 8px 24px rgba(255,189,46,.3)">
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="white" stroke="none">
+            style="width:64px;height:64px;margin:0 auto 18px;border-radius:50%;background:var(--surface);display:grid;place-items:center;box-shadow:var(--shadow-2);border:1px solid var(--line)">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor" stroke="none" style="color:var(--ink)">
               <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
             </svg>
           </div>
