@@ -8,7 +8,8 @@
   </title>
   <meta name="description"
     content="Fluencai makes your brand faster, clearer, and more scalable with AI: on-brand visuals, a voice AI assistant, app builder, and try-on tech that turns clicks into conversions." />
-  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="icon" type="image/svg+xml"
+    href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64' viewBox='0 0 64 64'%3E%3Crect rx='14' ry='14' width='64' height='64' fill='%23161618'/%3E%3Ctext x='50%25' y='55%25' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-weight='bold' font-size='40' fill='%23ededef'%3EF%3C/text%3E%3C/svg%3E" />
   <link rel="icon" href="/favicon.ico" sizes="any">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
   <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#0f1221">
@@ -673,7 +674,7 @@
       display: grid;
       place-items: center;
       background: var(--brand-gradient);
-      box-shadow: 0 6px 20px rgba(216, 189, 255, .35), inset 0 1px 0 rgba(255, 255, 255, .5);
+      box-shadow: var(--shadow-2);
       transition: transform .3s var(--ease-bounce), box-shadow .3s var(--ease-smooth);
       overflow: hidden;
     }
@@ -697,8 +698,8 @@
 
     .svc .icon:hover {
       transform: translateY(-4px) scale(1.08) rotate(2deg);
-      box-shadow: 0 12px 32px rgba(216, 189, 255, .5), 0 4px 16px rgba(194, 233, 251, .3);
-      animation: pulse-glow 1.5s ease-in-out infinite;
+      box-shadow: var(--shadow-2);
+      animation: none;
     }
 
     @keyframes pulse-glow {
