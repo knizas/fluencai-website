@@ -9,8 +9,9 @@
     content="Describe your app, see live phone & laptop previews, and export clean, responsive HTML/CSS/JS. Plug in forms/APIs and deploy anywhere." />
   <link rel="icon" type="image/svg+xml"
     href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23d8bdff'/%3E%3Cstop offset='1' stop-color='%23c2e9fb'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect rx='14' ry='14' width='64' height='64' fill='url(%23g)'/%3E%3C/svg%3E" />
+  <!-- Kive-Inspired Fonts -->
   <link
-    href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,300;8..144,400;8..144,700;8..144,900&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Inter:wght@400;500;600;700&display=swap"
     rel="stylesheet">
   <!-- Favicon / app icons -->
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
@@ -21,25 +22,29 @@
 
   <style>
     :root {
-      --brand-a: #d8bdff;
-      --brand-b: #c2e9fb;
-      --bg: linear-gradient(180deg, var(--brand-a) 0%, var(--brand-b) 100%);
-      --ink: #0f1221;
-      --ink-2: #30364a;
-      --line: #e8eaf2;
+      /* Monochrome with Ivory Warmth */
+      --brand-black: #161618;
+      --brand-white: #ededef;
+      --ink: #11181c;
+      --ink-2: #687076;
+      --surface: #f5f3f0;
+      --surface-white: #faf9f7;
+      --bg: #fefdfb;
+      --line: #e8e6e3;
+      --line-dark: #687076;
       --container: 1120px;
       --wrap: 980px;
       --gutter: 24px;
-      /* tighter spacing */
       --s-1: 8px;
       --s-2: 12px;
       --s-3: 18px;
       --s-4: 24px;
       --s-5: 32px;
       --s-6: 44px;
-      --r-lg: 20px;
-      --r-xl: 24px;
-      --shadow-1: 0 8px 24px rgba(16, 18, 34, .08), 0 2px 10px rgba(16, 18, 34, .05);
+      --r-lg: 16px;
+      --r-xl: 20px;
+      --shadow-1: 0 1px 3px 0 rgba(0, 0, 0, .1);
+      --shadow-2: 0 4px 12px 0 rgba(0, 0, 0, .08);
     }
 
     * {
@@ -50,12 +55,13 @@
     body {
       margin: 0;
       color: var(--ink);
-      font-family: "Roboto Flex", system-ui, -apple-system, Segoe UI, Helvetica, Arial, sans-serif
+      font-family: "Inter", system-ui, -apple-system, Segoe UI, Helvetica, Arial, sans-serif;
+      font-weight: 400;
+      line-height: 1.6;
     }
 
     body {
       background: var(--bg);
-      background-attachment: fixed
     }
 
     a {
@@ -84,13 +90,15 @@
       padding: var(--s-6) 0
     }
 
-    /* Type */
+    /* Serif Headings */
     h1 {
       margin: 0 0 var(--s-1);
       font-size: clamp(42px, 6.5vw, 88px);
       line-height: 1.02;
       letter-spacing: -.015em;
-      font-weight: 900
+      font-weight: 700;
+      font-family: "Libre Baskerville", Georgia, serif;
+      color: var(--ink);
     }
 
     h2 {
@@ -98,21 +106,26 @@
       font-size: clamp(26px, 4vw, 42px);
       line-height: 1.08;
       letter-spacing: -.01em;
-      font-weight: 900
+      font-weight: 700;
+      font-family: "Libre Baskerville", Georgia, serif;
+      color: var(--ink);
     }
 
     h3 {
       margin: 0 0 var(--s-1);
       font-size: 21px;
       line-height: 1.25;
-      font-weight: 900
+      font-weight: 700;
+      font-family: "Libre Baskerville", Georgia, serif;
+      color: var(--ink);
     }
 
     p {
       margin: 0;
       color: var(--ink-2);
       line-height: 1.6;
-      font-size: 16px
+      font-size: 16px;
+      font-family: "Inter", sans-serif;
     }
 
     .lead {
@@ -164,7 +177,8 @@
       width: 26px;
       height: 26px;
       border-radius: 999px;
-      background: linear-gradient(135deg, var(--brand-a), var(--brand-b))
+      background: var(--ink);
+      box-shadow: var(--shadow-1);
     }
 
     .menu {
@@ -293,27 +307,38 @@
       touch-action: none
     }
 
-    /* Buttons */
+    /* Monochrome Buttons */
     .btn {
       display: inline-flex;
       align-items: center;
       gap: 10px;
       padding: 12px 18px;
       border-radius: 999px;
-      border: 1px solid var(--line);
-      background: linear-gradient(135deg, var(--brand-a), var(--brand-b));
-      color: #0f1221;
-      font-weight: 800;
+      border: 1px solid var(--ink);
+      background: var(--ink);
+      color: var(--brand-white);
+      font-weight: 600;
+      font-family: "Inter", sans-serif;
       box-shadow: var(--shadow-1);
-      transition: transform .15s ease, box-shadow .2s ease
+      transition: all .2s ease;
+      cursor: pointer;
     }
 
     .btn:hover {
-      transform: translateY(-1px)
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-2);
+      background: var(--brand-black);
     }
 
     .btn.ghost {
-      background: #fff
+      background: var(--surface-white);
+      color: var(--ink);
+      border-color: var(--line);
+    }
+
+    .btn.ghost:hover {
+      background: var(--surface);
+      border-color: var(--line-dark);
     }
 
     .ic {
@@ -322,43 +347,24 @@
       vertical-align: -4px
     }
 
-    /* Cards & grids */
+    /* Clean Ivory Cards */
     .glass {
       position: relative;
-      background: rgba(255, 255, 255, .42);
-      border: 1px solid rgba(255, 255, 255, .35);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
+      background: var(--surface-white);
+      border: 1px solid var(--line);
       border-radius: var(--r-lg);
       padding: 18px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      transition: transform .18s ease, box-shadow .25s ease
-    }
-
-    .glass::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      border-radius: var(--r-lg);
-      padding: 2px;
-      background: linear-gradient(135deg, var(--brand-a), var(--brand-b), var(--brand-a));
-      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-      -webkit-mask-composite: xor;
-      mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-      mask-composite: exclude;
-      opacity: 0;
-      transition: opacity .3s ease;
-    }
-
-    .glass:hover::before {
-      opacity: 1
+      box-shadow: var(--shadow-1);
+      transition: transform .3s ease, box-shadow .3s ease;
     }
 
     .glass:hover {
       transform: translateY(-4px);
-      box-shadow: 0 16px 48px rgba(16, 18, 34, .14), 0 4px 20px rgba(216, 189, 255, .2);
+      box-shadow: var(--shadow-2);
+      border-color: var(--line-dark);
     }
 
     .card {
@@ -392,10 +398,10 @@
       width: 56px;
       height: 56px;
       border-radius: 14px;
-      border: 1px solid rgba(255, 255, 255, .6);
+      border: 1px solid var(--line);
       display: grid;
       place-items: center;
-      background: linear-gradient(135deg, var(--brand-a), var(--brand-b))
+      background: var(--surface);
     }
 
     .svc .icon .ic {
@@ -556,12 +562,10 @@
       }
     }
 
-    /* === Footer (clean, even, aligned) === */
+    /* Clean Monochrome Footer */
     footer.site-footer {
-      border-top: 1px solid #ffffff;
-      /* white line spans full width */
+      border-top: 1px solid var(--line);
       padding: 48px 0 40px;
-      /* extra space so © sits lower */
     }
 
     .site-footer .container {
@@ -573,16 +577,16 @@
     .foot-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      /* equal columns for even look */
       gap: 32px;
-      /* consistent gaps */
       align-items: start;
     }
 
     .foot-col h4 {
       margin: 0 0 12px;
       font-size: 18px;
-      font-weight: 900;
+      font-weight: 700;
+      font-family: "Libre Baskerville", Georgia, serif;
+      color: var(--ink);
       line-height: 1.2;
     }
 
@@ -596,7 +600,8 @@
     }
 
     .foot-col a:hover {
-      text-decoration: underline
+      color: var(--ink);
+      text-decoration: underline;
     }
 
     .foot-copy {

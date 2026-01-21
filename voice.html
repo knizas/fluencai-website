@@ -16,36 +16,33 @@
     content="Humanized voice agents in 10+ languages. Natural prosody, real-time responsiveness, and easy website/telephony integration. Coming soon from Fluencai." />
   <link rel="icon" type="image/svg+xml"
     href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23d8bdff'/%3E%3Cstop offset='1' stop-color='%23c2e9fb'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect rx='14' ry='14' width='64' height='64' fill='url(%23g)'/%3E%3C/svg%3E" />
+  <!-- Kive-Inspired Fonts -->
   <link
-    href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,300;8..144,400;8..144,700;8..144,900&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Inter:wght@400;500;600;700&display=swap"
     rel="stylesheet">
 
   <style>
     :root {
-      /* Enhanced Color System */
-      --brand-a: #d8bdff;
-      --brand-b: #c2e9fb;
-      --brand-gradient: linear-gradient(135deg, var(--brand-a), var(--brand-b));
-      --accent-purple-light: #e8d4ff;
-      --accent-purple-dark: #b89ef5;
-      --accent-blue-light: #d4f1fc;
-      --accent-blue-dark: #9dd9f0;
-      --ink: #0a0d14;
-      --ink-2: #2a3142;
-      --ink-3: #4a5568;
-      --line: #e2e6f5;
-      --surface: #f8f9fd;
-      --bg: linear-gradient(180deg, var(--brand-a) 0%, var(--brand-b) 100%);
+      /* Monochrome with Ivory Warmth */
+      --brand-black: #161618;
+      --brand-white: #ededef;
+      --ink: #11181c;
+      --ink-2: #687076;
+      --ink-3: #7e868c;
+      --surface: #f5f3f0;
+      --surface-white: #faf9f7;
+      --bg: #fefdfb;
+      --line: #e8e6e3;
+      --line-dark: #687076;
       --container: 1120px;
       --wrap: 980px;
       --gutter: 24px;
-      --r-sm: 12px;
-      --r-md: 16px;
-      --r-lg: 20px;
-      --r-xl: 24px;
-      --shadow-1: 0 8px 32px rgba(16, 18, 34, .08), 0 2px 12px rgba(16, 18, 34, .04), inset 0 1px 0 rgba(255, 255, 255, .6);
-      --shadow-2: 0 18px 48px rgba(16, 18, 34, .12), 0 8px 24px rgba(16, 18, 34, .08);
-      --shadow-glow: 0 0 40px rgba(216, 189, 255, .3);
+      --r-sm: 8px;
+      --r-md: 12px;
+      --r-lg: 16px;
+      --r-xl: 20px;
+      --shadow-1: 0 1px 3px 0 rgba(0, 0, 0, .1);
+      --shadow-2: 0 4px 12px 0 rgba(0, 0, 0, .08);
       --s-1: 8px;
       --s-2: 12px;
       --s-3: 18px;
@@ -66,75 +63,15 @@
     body {
       margin: 0;
       color: var(--ink);
-      font-family: "Roboto Flex", system-ui, -apple-system, Segoe UI, Helvetica, Arial, sans-serif;
+      font-family: "Inter", system-ui, -apple-system, Segoe UI, Helvetica, Arial, sans-serif;
+      font-weight: 400;
+      line-height: 1.6;
     }
 
     body {
       background: var(--bg);
-      background-attachment: fixed;
       position: relative;
       overflow-x: hidden;
-    }
-
-    /* Floating particles background */
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      z-index: 0;
-      background: radial-gradient(circle at 20% 50%, rgba(216, 189, 255, .15) 0%, transparent 50%),
-        radial-gradient(circle at 80% 50%, rgba(194, 233, 251, .15) 0%, transparent 50%);
-      animation: mesh-move 20s ease-in-out infinite;
-      pointer-events: none;
-    }
-
-    /* Floating particles */
-    body::after {
-      content: '';
-      position: fixed;
-      inset: 0;
-      z-index: 0;
-      background-image: radial-gradient(circle at 10% 20%, rgba(216, 189, 255, 0.4) 0%, transparent 3%),
-        radial-gradient(circle at 90% 80%, rgba(194, 233, 251, 0.4) 0%, transparent 3%),
-        radial-gradient(circle at 30% 70%, rgba(216, 189, 255, 0.3) 0%, transparent 2%),
-        radial-gradient(circle at 70% 30%, rgba(194, 233, 251, 0.3) 0%, transparent 2%),
-        radial-gradient(circle at 50% 50%, rgba(216, 189, 255, 0.2) 0%, transparent 2%),
-        radial-gradient(circle at 15% 60%, rgba(194, 233, 251, 0.3) 0%, transparent 2%),
-        radial-gradient(circle at 85% 40%, rgba(216, 189, 255, 0.3) 0%, transparent 2%);
-      animation: float-particles 40s ease-in-out infinite;
-      pointer-events: none;
-      opacity: 0.6;
-    }
-
-    @keyframes mesh-move {
-
-      0%,
-      100% {
-        transform: translate(0, 0) scale(1)
-      }
-
-      50% {
-        transform: translate(20px, -20px) scale(1.05)
-      }
-    }
-
-    @keyframes float-particles {
-
-      0%,
-      100% {
-        transform: translate(0, 0) rotate(0deg);
-        opacity: 0.6;
-      }
-
-      33% {
-        transform: translate(30px, -30px) rotate(120deg);
-        opacity: 0.8;
-      }
-
-      66% {
-        transform: translate(-20px, 20px) rotate(240deg);
-        opacity: 0.5;
-      }
     }
 
     a {
@@ -448,21 +385,9 @@
       overflow: hidden
     }
 
-    /* spotlight orb like ElevenLabs */
+    /* spotlight removed - clean ivory background */
     .hero::before {
-      content: "";
-      position: absolute;
-      inset: auto;
-      left: 50%;
-      top: 52%;
-      width: 920px;
-      height: 920px;
-      transform: translate(-50%, -50%);
-      background: radial-gradient(closest-side, rgba(255, 255, 255, .9), rgba(255, 255, 255, .55) 40%, rgba(255, 255, 255, 0) 70%),
-        radial-gradient(closest-side, rgba(210, 190, 255, .65), rgba(194, 233, 251, .35) 55%, rgba(194, 233, 251, 0) 75%);
-      filter: blur(18px);
-      pointer-events: none;
-      z-index: 0;
+      display: none;
     }
 
     .hero>.container {
@@ -587,14 +512,14 @@
     }
 
     .avatar-ring.pulse {
-      box-shadow: 0 0 0 10px rgba(216, 189, 255, .25), 0 0 0 22px rgba(194, 233, 251, .18)
+      box-shadow: 0 0 0 10px rgba(0, 0, 0, .05), 0 0 0 22px rgba(0, 0, 0, .03)
     }
 
     .avatar {
       width: 74px;
       height: 74px;
       border-radius: 50%;
-      background: linear-gradient(135deg, var(--brand-a), var(--brand-b));
+      background: var(--surface);
       border: 1px solid var(--line)
     }
 
@@ -643,7 +568,8 @@
     }
 
     .chip.agent {
-      background: linear-gradient(135deg, var(--brand-a), var(--brand-b))
+      background: var(--ink);
+      color: var(--brand-white);
     }
 
     .bubble {
@@ -737,8 +663,8 @@
       display: grid;
       place-items: center;
       position: relative;
-      background: conic-gradient(from 0deg, var(--brand-a), var(--brand-b));
-      box-shadow: 0 10px 28px rgba(16, 18, 34, .18);
+      background: var(--ink);
+      box-shadow: var(--shadow-2);
       transition: transform .15s ease
     }
 
@@ -751,7 +677,7 @@
       position: absolute;
       inset: 6px;
       border-radius: 50%;
-      background: #fff;
+      background: var(--surface-white);
       border: 1px solid var(--line)
     }
 
@@ -783,7 +709,7 @@
       position: absolute;
       inset: 0 0 0 0;
       width: 0;
-      background: linear-gradient(90deg, var(--brand-a), var(--brand-b));
+      background: linear-gradient(90deg, var(--ink-3), var(--ink-2));
       transition: width .2s linear
     }
 
@@ -803,7 +729,7 @@
     .bar {
       width: 3px;
       border-radius: 2px;
-      background: linear-gradient(180deg, var(--brand-a), var(--brand-b));
+      background: linear-gradient(180deg, var(--ink-3), var(--ink-2));
       height: 6px;
       animation: wave 1.2s ease-in-out infinite;
       transform-origin: bottom
@@ -912,18 +838,7 @@
     }
 
     .glass::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      border-radius: var(--r-lg);
-      padding: 2px;
-      background: linear-gradient(135deg, var(--brand-a), var(--brand-b), var(--brand-a));
-      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-      -webkit-mask-composite: xor;
-      mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-      mask-composite: exclude;
-      opacity: 0;
-      transition: opacity .3s var(--ease-smooth);
+      display: none;
     }
 
     .glass:hover::before {
@@ -1117,8 +1032,7 @@
     /* === Footer (clean, even, aligned) === */
     /* Enhanced Footer */
     footer.site-footer {
-      border-top: 2px solid transparent;
-      border-image: linear-gradient(90deg, var(--brand-a) 0%, var(--brand-b) 50%, var(--brand-a) 100%) 1;
+      border-top: 1px solid var(--line);
       padding: 48px 0 36px;
     }
 
@@ -1224,8 +1138,8 @@
       border-radius: 14px;
       display: grid;
       place-items: center;
-      background: linear-gradient(135deg, var(--brand-a), var(--brand-b));
-      border: 1px solid rgba(255, 255, 255, .6);
+      background: var(--surface);
+      border: 1px solid var(--line);
     }
 
     .ucard .ico .ic {
@@ -1297,7 +1211,7 @@
       top: 12px;
       height: 4px;
       border-radius: 999px;
-      background: linear-gradient(90deg, var(--brand-a), var(--brand-b));
+      background: var(--line-dark);
       opacity: .9;
     }
 
@@ -1352,8 +1266,8 @@
       height: 34px;
       border-radius: 10px;
       margin-right: 8px;
-      background: linear-gradient(135deg, var(--brand-a), var(--brand-b));
-      border: 1px solid rgba(255, 255, 255, .6);
+      background: var(--surface);
+      border: 1px solid var(--line);
       box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .35);
     }
 
