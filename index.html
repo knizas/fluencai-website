@@ -10,7 +10,7 @@
   </title>
   <meta name="description"
     content="Fluencai makes your brand faster, clearer, and more scalable with AI: on-brand visuals, a voice AI assistant, app builder, and try-on tech that turns clicks into conversions." />
-  <meta name="theme-color" content="#d8bdff">
+  <meta name="theme-color" content="#faf9f7">
 
   <!-- Kive-Inspired Fonts: Serif + Sans Pairing -->
   <link
@@ -558,7 +558,9 @@
       font-weight: 700;
       white-space: nowrap;
       cursor: pointer;
-      transition: all .2s var(--ease-smooth)
+      transition: all .2s var(--ease-smooth);
+      color: var(--ink);
+      /* Force text color */
     }
 
     .chip:hover {
@@ -1043,7 +1045,14 @@
       display: grid;
       place-items: center;
       transition: all .2s var(--ease-smooth);
-      cursor: pointer
+      cursor: pointer;
+      color: var(--ink);
+      /* Force black icon color */
+    }
+
+    .carousel-btn svg {
+      fill: var(--ink);
+      /* Force fill color */
     }
 
     .carousel-btn:hover {
