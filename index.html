@@ -1184,6 +1184,176 @@
         justify-content: center
       }
     }
+
+    /* === NEW HERO STYLES (Lovable-inspired) === */
+    .hero-input-container {
+      width: 100%;
+      max-width: 780px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .hero-input-wrapper {
+      position: relative;
+      background: #fff;
+      border-radius: 32px;
+      /* Subtle, premium shadow */
+      box-shadow:
+        0 2px 4px rgba(0, 0, 0, 0.02),
+        0 8px 16px rgba(0, 0, 0, 0.04),
+        0 0 0 1px rgba(0, 0, 0, 0.04),
+        0 0 0 5px rgba(246, 244, 242, 0.6);
+      /* Warm outer ring */
+      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      display: flex;
+      align-items: center;
+      padding: 6px;
+    }
+
+    .hero-input-wrapper:focus-within {
+      box-shadow:
+        0 12px 28px rgba(0, 0, 0, 0.08),
+        0 0 0 1px rgba(0, 0, 0, 0.05),
+        0 0 0 6px rgba(228, 226, 224, 0.8);
+      transform: translateY(-2px);
+    }
+
+    .hero-input {
+      flex: 1;
+      border: none;
+      outline: none;
+      padding: 18px 24px;
+      font-size: 17px;
+      color: var(--ink);
+      background: transparent;
+      font-family: "Inter", sans-serif;
+      min-height: 62px;
+    }
+
+    .hero-input::placeholder {
+      color: #9ca3af;
+      font-weight: 450;
+    }
+
+    .hero-send-btn {
+      width: 52px;
+      height: 52px;
+      border-radius: 20px;
+      background: var(--brand-black);
+      color: #fff;
+      border: none;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
+      flex-shrink: 0;
+      margin-right: 4px;
+    }
+
+    .hero-send-btn:hover {
+      background: #000;
+      transform: scale(1.04);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .hero-chips {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 28px;
+      flex-wrap: wrap;
+    }
+
+    .hero-chip {
+      padding: 11px 20px;
+      background: #fff;
+      border: 1px solid var(--line-subtle);
+      border-radius: 99px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--ink-2);
+      transition: all 0.2s ease;
+      cursor: pointer;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
+    }
+
+    .hero-chip:hover {
+      background: #faf9f7;
+      border-color: var(--line-dark);
+      color: var(--ink);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    }
+
+    /* AI Message Bubble enhancement */
+    .ai-bubble-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 32px;
+      animation: fade-slide-up 0.6s ease-out;
+    }
+
+    .ai-bubble {
+      background: #ffffff;
+      border: 1px solid rgba(0, 0, 0, 0.04);
+      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.03);
+      border-radius: 24px;
+      padding: 24px 32px;
+      font-size: 18px;
+      line-height: 1.6;
+      color: var(--ink);
+      display: flex;
+      align-items: flex-start;
+      gap: 18px;
+      max-width: 820px;
+      text-align: left;
+    }
+
+    .ai-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: var(--brand-black);
+      color: #fff;
+      display: grid;
+      place-items: center;
+      font-size: 13px;
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 2px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .ai-text {
+      font-weight: 500;
+    }
+
+    .typewriter-status {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 24px;
+      color: var(--ink-2);
+      font-weight: 600;
+      font-size: 15px;
+      opacity: 0.9;
+    }
+
+    @media (max-width: 640px) {
+      .ai-bubble {
+        padding: 18px 20px;
+        font-size: 16px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+      }
+
+      .hero-input {
+        padding: 16px;
+        font-size: 16px;
+      }
+    }
   </style>
 </head>
 
@@ -1292,35 +1462,53 @@
       <p class="lead">Fluencai helps you move faster with AI—on-brand visuals, voice support, custom apps, and AI try-on
         tech—each built to boost your brand.</p>
 
-      <!-- Copilot Chat (glass) -->
-      <div class="chat glass" aria-label="Fluencai AI Assistant copilot">
-        <div class="typing">
-          <span class="dot"></span><span class="dot"></span><span class="dot"></span>
-          <span id="typewriter" style="margin-left:6px">From moodboard to media: Fluencai turns your brand into visuals,
-            voice, and more—in minutes...</span>
+      <!-- Copilot Chat (Refined) -->
+      <div style="margin-top: 48px; margin-bottom: 64px;">
+
+        <!-- Typewriter / Status -->
+        <div class="typewriter-status" style="justify-content:center;">
+          <div class="typing" style="margin:0;">
+            <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+          </div>
+          <span id="typewriter">Change the way you build your brand</span>
         </div>
-        <div class="messages" id="messages" aria-live="polite">
-          <div class="msg ai">
-            <div class="avatar">AI</div>
-            <div class="bubble">What’s your product? Where’s it going? I’ll spin up the right scenes, styles, and
+
+        <!-- AI Message -->
+        <div class="ai-bubble-container">
+          <div class="ai-bubble">
+            <div class="ai-avatar">AI</div>
+            <div class="ai-text">What’s your product? Where’s it going? I’ll spin up the right scenes, styles, and
               formats—tailored for every screen.</div>
           </div>
         </div>
-        <div class="composer">
-          <div class="input"><input id="prompt"
-              placeholder="Skincare serum hero for mobile ads, soft lilac, marble, dewy" /></div>
-          <button class="send" id="send" aria-label="Generate"><svg class="ic">
-              <use href="#ext" />
-            </svg></button>
+
+        <!-- Hero Input -->
+        <div class="hero-input-container">
+          <div class="hero-input-wrapper">
+            <input class="hero-input" id="prompt"
+              placeholder="Skincare serum hero for mobile ads, soft lilac, marble, dewy" />
+            <button class="hero-send-btn" id="send" aria-label="Generate">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                stroke-linecap="round" stroke-linejoin="round">
+                <line x1="7" y1="17" x2="17" y2="7"></line>
+                <polyline points="7 7 17 7 17 17"></polyline>
+              </svg>
+            </button>
+          </div>
         </div>
-        <div class="chiprow" id="chips">
-          <button class="chip" data-fill="Makeup flatlay with soft shadow, textured background">Your visual content
+
+        <!-- Chips -->
+        <div class="hero-chips" id="chips">
+          <button class="hero-chip" data-fill="Makeup flatlay with soft shadow, textured background">Your visual content
             engine</button>
-          <button class="chip" data-fill="Change my outfit into a floral dress">Your virtual outfit switcher</button>
-          <button class="chip" data-fill="Voice reply to order status question, warm tone">Your 24/7 voice rep</button>
-          <button class="chip" data-fill="Nail salon booking screen, brand colors applied">Your no-code app
+          <button class="hero-chip" data-fill="Change my outfit into a floral dress">Your virtual outfit
+            switcher</button>
+          <button class="hero-chip" data-fill="Voice reply to order status question, warm tone">Your 24/7 voice
+            rep</button>
+          <button class="hero-chip" data-fill="Nail salon booking screen, brand colors applied">Your no-code app
             creator</button>
         </div>
+
       </div>
 
       <!-- KPIs (glass) — cleaned up -->
